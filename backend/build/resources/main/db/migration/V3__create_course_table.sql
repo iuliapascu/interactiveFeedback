@@ -1,0 +1,8 @@
+
+CREATE TABLE course
+(
+    id BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    version INTEGER NOT NULL,
+    name VARCHAR(100),
+    code VARCHAR(10)
+);

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <title>Interactive Feedback</title>
+
+    <link rel="stylesheet" href="./app/libs/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="ifeed.css"/>
+</head>
+<body>
+    <div class="container wrapper col-md-6 col-md-offset-3">
+        <div th:if="${param.error}">
+            Invalid username and password.
+        </div>
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
+
+        <form class="login-form col-md-12" th:action="@{/login}" method="post">
+            <div class="form-group">
+                <label for="username">User Name:</label>
+                <input id="username" class="form-control" type="text" name="username"/>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input id="password" class="form-control" type="password" name="password"/>
+            </div>
+            <div>
+                <input class="btn btn-default" type="submit" value="Sign In"/>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

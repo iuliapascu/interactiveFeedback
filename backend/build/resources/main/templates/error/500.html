@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org/xsd/thymeleaf-extras-dialect-2.1.xsd"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout/error">
+<head>
+    <title>Cuttingspeed</title>
+</head>
+<body>
+
+<h1 layout:fragment="header">Something went wrong...</h1>
+
+<h2 layout:fragment="description">Application has encountered an error.</h2>
+
+<div layout:fragment="details" th:if="${env.getProperty('cuttingspeed.stacktrace.show')}">
+    <span class="hidden" th:text="${exception.message}"></span>
+    <span class="hidden" th:each="e: ${exception.stackTrace}" th:text="${e}"></span>
+</div>
+
+</body>
+</html>
+

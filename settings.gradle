@@ -1,0 +1,4 @@
+rootProject.name = 'InteractiveFeedbackParent'
+
+include 'backend'
+include 'frontend'

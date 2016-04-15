@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <title>Cutting Speed</title>
+    <link rel="stylesheet" href="/app/libs/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/app/libs/fontawesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/css/cuttingspeed.css"/>
+    <script src="/js/password-generator.js"></script>
+</head>
+<body>
+<div class="container wrapper">
+
+    <div class="header">
+        <h1>Edit User</h1>
+    </div>
+
+    <div class="row">
+        <div th:if="${param.error}" th:text="#{param.error}"></div>
+
+        <form class="form-horizontal" th:object="${user}" action="#" th:action="@{/admin/edit}" method="POST">
+            <input type="hidden" th:field="*{id}"/>
+
+            <div class="form-group">
+                <label for="userName">Username</label>
+                <input th:field="*{userName}" type="text" class="form-control" id="userName" placeholder="username"/>
+            </div>
+
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input th:field="*{firstName}" type="text" class="form-control" id="firstName" placeholder="firstname"/>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input th:field="*{lastName}" type="text" class="form-control" id="lastName" placeholder="lastname"/>
+            </div>
+
+            <div class="form-group">
+                <label for="email">eMail</label>
+                <input th:field="*{email}" type="email" class="form-control" id="email" placeholder="email"/>
+            </div>
+
+            <div class="form-group">
+                <label for="company">Company</label>
+                <input th:field="*{company}" type="text" class="form-control" id="company" placeholder="company"/>
+            </div>
+
+            <div class="form-group">
+                <label for="taxId">Tax ID</label>
+                <input th:field="*{taxId}" type="text" class="form-control" id="taxId" placeholder="taxId"/>
+            </div>
+
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input th:field="*{address}" type="text" class="form-control" id="address" placeholder="address"/>
+            </div>
+
+
+            <div class="form-group">
+                <label for="countryCode">Country</label>
+                <input th:field="*{countryCode}" type="text" class="form-control" id="countryCode"
+                       placeholder="countryCode" maxlength="3"/>
+            </div>
+
+
+            <div class="form-group">
+                <label for="telephone">Telephone</label>
+                <input th:field="*{telephone}" type="text" class="form-control" id="telephone" placeholder="telephone"/>
+            </div>
+
+
+            <div class="form-group">
+                <label for="notes">Notes</label>
+                <input th:field="*{notes}" type="text" class="form-control" id="notes" placeholder="notes"/>
+            </div>
+
+
+            <div class="form-group">
+                <label for="payedDate">Payed Date</label>
+                <input th:field="*{payedDate}" type="date" class="form-control" id="payedDate"
+                       placeholder="payedDate (dd.MM.yyyy)" pattern="dd.MM.yyyy"/>
+            </div>
+
+            <div class="form-group">
+                <label for="licenceUntil">Licence until</label>
+                <input th:field="*{licenceUntil}" type="date" class="form-control" id="licenceUntil"
+                       placeholder="licenceUntil (dd.MM.yyyy)" pattern="dd.MM.yyyy"/>
+            </div>
+
+            <script language="JavaScript">
+                function refreshPassword() {
+                    document.getElementById('password').value = generatePass(8);
+                }
+            </script>
+
+            <div class="form-group highlight">
+                <div>
+                    <label for="password">Password</label>
+                </div>
+                <input th:field="*{password}" class="form-control augmented-input" id="password" placeholder="***"/>
+                <button class="btn input-extension" onclick="refreshPassword(); return false;">
+                    <i class="fa fa-refresh"></i>
+                </button>
+                <div class="alert alert-danger">
+                    <strong>Attention:</strong> Please, remember to notify the user in case you change his password.
+                </div>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Submit</button>
+            <a href="/admin">Cancel</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

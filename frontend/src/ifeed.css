@@ -1,0 +1,93 @@
+body {
+    background-color: #ADD8E6;
+}
+
+.ifeed {
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 20px;
+    color: #003366;
+}
+
+.currentComponent{
+    overflow: auto;
+    margin-top: 10px;
+    background-color: #fff;
+    padding: 10px;
+}
+
+.newCourseSection, .newQuestionSection {
+    border: 1px solid #003366;
+    margin: 10px;
+}
+
+.controlBtns {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 0px;
+}
+
+table tr:hover {
+    cursor: pointer;
+}
+
+.questionDetail {
+    background-color: #eee;
+}
+
+.smallBtn {
+    float: right;
+    padding: 2px;
+}
+
+.editBtn {
+    margin-right: 5px;
+}
+
+.newBtn {
+    float: right;
+    margin: 10px;
+}
+
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+}
+
+/*top level navigation style*/
+#topNavBar {
+    background-color: #003366;
+    color: #ADD8E6;
+    min-height: 50px;
+    line-height: 50px;
+    vertical-align: center;
+}
+
+#topNavBar li {
+    margin-right: 20px;
+}
+
+#topNavBar li:hover {
+    cursor: pointer;
+}
+
+#topNavBar .selected {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.nav {
+    display: flex;
+}
+
+.boldFont {
+    font-weight: bold;
+}
+
+.selectedLang {
+    font-weight: bold;
+    color: #fff;
+}

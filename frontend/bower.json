@@ -1,0 +1,14 @@
+{
+  "name": "interactiveFeedback",
+  "description": "Interactive Feedback Application",
+  "private": true,
+  "authors": [
+    "Iulia Pascu <iulia-anamaria.pascu@catalysts.cc>"
+  ],
+  "license": "unlicensed",
+  "dependencies": {
+    "bootstrap": "4.0.0-alpha",
+    "Chart.js": "1.0.2",
+    "fontawesome": "~4.1.0"
+  }
+}

@@ -1,0 +1,18 @@
+<div *ngIf="!courseSelected">
+    <h2 class="bigFont">{{'select_course' | translate}}</h2>
+    <course-list (onCourseSelectedEvent)="handleOnSelectedCourseEvent($event)"></course-list>
+</div>
+
+<div *ngIf="courseSelected">
+    <h2 class="bigFont">{{'course_management' | translate}}</h2>
+    <h4 class="bigFont">{{selectedCourse.name}}</h4>
+
+
+    <div class="col-md-6">
+        <topic-list [selectedCourse]="selectedCourse"></topic-list>
+    </div>
+    <div class="col-md-6">
+        <question-list [selectedCourse]="selectedCourse"></question-list>
+    </div>
+
+</div>

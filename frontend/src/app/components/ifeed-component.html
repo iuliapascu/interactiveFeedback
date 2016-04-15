@@ -1,0 +1,40 @@
+<div class="ifeed">
+    <div id="topNavBar">
+        <nav class="navbar navbar-inverse">
+                <ul class="nav pull-left">
+                    <li><span class="boldFont" [ngClass]="{'selected':selectedPage==0}" (click)="selectPage(0)">{{'events' | translate}}</span></li>
+                    <li><span class="boldFont" [ngClass]="{'selected':selectedPage==1}" (click)="selectPage(1)">{{'course_management' | translate}}</span></li>
+                    <li><span class="boldFont" [ngClass]="{'selected':selectedPage==2}" (click)="selectPage(2)">{{'user_admin' | translate}}</span></li>
+                    <li><span class="boldFont" [ngClass]="{'selected':selectedPage==3}" (click)="selectPage(3)">{{'course_admin' | translate}}</span></li>
+                </ul>
+                <ul class="nav pull-right">
+                    <li>
+                        <span [ngClass]="{selectedLang:'de' === translate.currentLang}" (click)="translate.use('de')">DE</span> /
+                        <span [ngClass]="{selectedLang:'en' === translate.currentLang}" (click)="translate.use('en')">EN</span>
+                    </li>
+                    <li>
+                        <a href="#" (click)="logout()">
+                            <span class="fa fa-fw fa-sign-out"></span>
+                            <span class="boldFont">LOGOUT</span>
+                        </a>
+                    </li>
+                </ul>
+        </nav>
+    </div>
+
+    <div class ="currentComponent">
+        <div *ngIf="selectedPage == 0">
+            <events></events>
+        </div>
+        <div *ngIf="selectedPage == 1">
+            <course-management></course-management>
+        </div>
+        <div *ngIf="selectedPage == 2">
+            <user-admin></user-admin>
+        </div>
+        <div *ngIf="selectedPage == 3">
+            <course-admin></course-admin>
+        </div>
+    </div>
+
+</div>

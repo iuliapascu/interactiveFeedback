@@ -1,0 +1,34 @@
+<h2 class="bigFont">{{'course_admin' | translate}}</h2>
+
+<div class="col-md-12">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>{{'name' | translate }}</th>
+            <th>{{'code' | translate }}</th>
+            <th>{{'remove' | translate }}</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="#course of getCourses()">
+                <td><input class="form-control" [(ngModel)]="course.name" (change)="saveCourse(course)"></td>
+                <td><input class="form-control" [(ngModel)]="course.code" (change)="saveCourse(course)"></td>
+                <td>
+                    <button class="btn btn-default" (click)="removeCourse(course)"><i class="fa fa-fw fa-trash-o"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button *ngIf="!newCourseDisplayed" class="btn btn-primary" (click)="displayNewCourse()">{{'add_course' | translate}}<i class="fa fa-fw fa-plus"></i></button>
+</div>
+<div *ngIf="newCourseDisplayed" class="col-md-6 newCourseSection">
+    <h3 class="bigFont">{{'new_course' | translate}}</h3>
+    <label class="col-md-6" for="courseName">{{'name' | translate}}</label>
+    <input class="col-md-6 form-control" id="courseName" [(ngModel)]="newCourse.name">
+    <label class="col-md-6" for="courseCode">{{'code' | translate}}</label>
+    <input class="col-md-6 form-control" id="courseCode" [(ngModel)]="newCourse.code">
+    <div class="col-md-6 controlBtns">
+        <button class="btn btn-danger" (click)="resetNewCourse()">{{'cancel' | translate}}<i class="fa fa-fw fa-times"></i></button>
+        <button class="btn btn-success" (click)="addCourse(newCourse)">{{'save' | translate}}<i class="fa fa-fw fa-check"></i></button>
+    </div>
+</div>

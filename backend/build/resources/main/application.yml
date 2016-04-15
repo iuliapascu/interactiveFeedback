@@ -1,0 +1,77 @@
+logging:
+  level: INFO
+
+
+spring:
+  datasource:
+    driverClassName: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+
+    # Hetzner Server
+    # url: jdbc:log4jdbc:mysql://newUrl:3306/interactivefeedback
+    # username: ifeed
+    # password: ifeed
+
+    url: jdbc:log4jdbc:mysql://localhost:3306/interactivefeedback
+    username: ifeed
+    password: ifeed
+
+    max-active: 25
+    max-idle: 10
+    testOnBorrow: true
+    testOnReturn: false
+    validationQuery: select 1
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+      dialect: org.hibernate.dialect.MySQL5Dialect
+    properties:
+      hibernate:
+        generate_statistics: true
+        cache:
+          use_second_level_cache: false
+          region:
+            factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+  messages:
+    basename: messages-base
+  thymeleaf:
+    cache: false
+  application:
+    name: Interactive Feedback
+
+# ehcache configuration
+cache:
+  timeToLiveSeconds: 3600
+  ehcache:
+    maxBytesLocalHeap: 256M
+
+
+flyway:
+  # must start with jdbc:mysql otherwise driver autodetection won't work
+  #url: jdbc:mysql://newUrl:3306/interactivefeedback
+  #schemas: interactivefeedback
+  #user: ifeed
+  #password: ifeed
+
+# development, test or production
+# spring.profiles.active = development
+
+# jdbc logging
+log4jdbc:
+  spylogdelegator:
+    name: net.sf.log4jdbc.log.slf4j.Slf4jSpyLogDelegator
+
+---
+# define the development profile
+spring:
+  profiles: development
+  datasource:
+      url: jdbc:log4jdbc:mysql://localhost:3306/interactivefeedback
+      username: ifeed
+      password: ifeed
+
+  flyway:
+    url: jdbc:mysql://localhost:3306/interactivefeedback
+    # url: jdbc:log4jdbc:mysql://newUrl:3306/interactivefeedback
+    user: ifeed
+    password: ifeed

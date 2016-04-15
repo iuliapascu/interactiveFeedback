@@ -1,0 +1,8 @@
+
+CREATE TABLE question
+(
+    id BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    version INTEGER NOT NULL,
+    title VARCHAR(100),
+    requirement VARCHAR(500)
+);

@@ -1,0 +1,20 @@
+{
+  "welcome":"Welcome!",
+  "events": "Events",
+  "course_management": "Course management",
+  "user_admin": "Users administration",
+  "course_admin": "Courses administration",
+  "select_course": "Select course",
+  "name": "Name",
+  "code": "Code",
+  "remove": "Remove",
+  "new_course": "Add new course",
+  "add_course": "Add course",
+  "new_question": "Add new question",
+  "add_question": "Add question",
+  "title": "Title",
+  "requirement": "Requirement",
+  "questions": "Questions",
+  "save": "Save",
+  "cancel": "Cancel"
+}

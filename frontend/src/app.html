@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+    <title>Configurator</title>
+    <base href=".">
+    <link rel="stylesheet" href="./app/libs/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./app/libs/fontawesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="ifeed.css"/>
+    <script src="./vendor/systemjs/dist/system.src.js"></script>
+    <script src="./vendor/rxjs/bundles/Rx.js"></script>
+    <script src="./vendor/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="./vendor/angular2/bundles/angular2.dev.js"></script>
+    <script src="./vendor/angular2/bundles/http.dev.js"></script>
+    <script src="./vendor/ng2-translate/ng2-translate.js"></script>
+    <script src="./app/libs/Chart.js/Chart.min.js"></script>
+
+    <script>
+        System.config({
+            packages: {
+                src: {
+                    format: 'register',
+                    defaultJSExtensions: true
+                },
+                app : {
+                    defaultJSExtensions: true
+                }
+            }
+        });
+
+        System.import('/app.js').then(null, console.error.bind(console));
+    </script>
+</head>
+<body>
+    <ifeed-app>Loading...</ifeed-app>
+</body>
+</html>
