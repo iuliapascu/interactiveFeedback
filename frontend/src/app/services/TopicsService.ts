@@ -14,9 +14,10 @@ export default class TopicsService {
         this.api = new HttpApiHelper(http, this.endpoint);
     }
 
-    public getTopics():Observable<Object> {
+    public getTopics(id: number):Observable<Object> {
         let jsonData:Observable<Object>;
         this.api.resetDefaultSearchParams();
+        this.api.setDefaultSearchParam('id=' + id);
 
         jsonData = this.api.getJson('/list');
         return jsonData.map((data) => TopicsResponse.fromJson(data));

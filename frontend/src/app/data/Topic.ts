@@ -5,6 +5,7 @@ export default class Topic {
                 public title?:string,
                 public position?:number,
                 public courseId?:number) {
+        this.position = 0;
     }
 
     static fromJson(json:any):Topic {

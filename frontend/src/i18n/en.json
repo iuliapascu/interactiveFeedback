@@ -16,5 +16,7 @@
   "requirement": "Requirement",
   "questions": "Questions",
   "save": "Save",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "topics": "Topics",
+  "add_topic": "Add topic"
 }

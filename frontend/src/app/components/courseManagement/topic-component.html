@@ -1,1 +1,39 @@
-TOPIC COMPONENT
+<div *ngIf="!newTopicDisplayed">
+    <button class="btn btn-primary newBtn" (click)="displayNewTopic()">{{'add_topic' | translate}}<i class="fa fa-fw fa-plus"></i></button>
+    <h3 class="bigFont">{{'topics' | translate}}</h3>
+    <table class="table table-scrollable">
+        <tbody>
+        <tr *ngFor="#topic of getTopics()">
+            <td *ngIf="selectedTopic != topic || !editMode">
+                <div>
+                    <button class="btn btn-primary smallBtn editBtn" (click)="removeTopic(topic)"><span class="fa faw fa-trash-o"></span></button>
+                    <button class="btn btn-primary smallBtn editBtn" (click)="setEditMode(true, topic)"><span class="fa faw fa-pencil-square-o"></span></button>
+                </div>
+                <div>
+                    <span><b>{{topic.title}}</b></span>
+                </div>
+            </td>
+            <td *ngIf="selectedTopic == topic && editMode">
+                <div>
+                    <label>{{'title' | translate}}</label><input class="form-control" [ngModel]="topic.title" #title>
+                    <div class="controlBtns">
+                        <button class="btn btn-danger" (click)="setEditMode(false, topic)">{{'cancel' | translate}}<i class="fa fa-fw fa-times"></i></button>
+                        <button class="btn btn-success" (click)="editTopic(topic, title)">{{'save' | translate}}<i class="fa fa-fw fa-check"></i></button>
+                    </div>
+                </div>
+                <br>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="newTopicDisplayed" class="col-md-12 newTopicSection">
+    <h3 class="bigFont">{{'new_topic' | translate}}</h3>
+    <label for="tTitle">{{'title' | translate}}</label>
+    <input class="form-control" id="tTitle" [(ngModel)]="newTopic.title">
+    <div class="controlBtns">
+        <button class="btn btn-danger" (click)="resetNewTopic()">{{'cancel' | translate}}<i class="fa fa-fw fa-times"></i></button>
+        <button class="btn btn-success" (click)="addTopic(newTopic)">{{'save' | translate}}<i class="fa fa-fw fa-check"></i></button>
+    </div>
+</div>

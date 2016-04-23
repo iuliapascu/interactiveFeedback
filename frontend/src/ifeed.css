@@ -16,7 +16,7 @@ body {
     padding: 10px;
 }
 
-.newCourseSection, .newQuestionSection {
+.newCourseSection, .newQuestionSection, .newTopicSection {
     border: 1px solid #003366;
     margin: 10px;
 }
