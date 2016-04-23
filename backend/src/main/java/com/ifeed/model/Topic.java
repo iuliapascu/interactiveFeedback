@@ -4,6 +4,8 @@ package com.ifeed.model;
  * Created by Iulia-Anamaria Pascu on 3/29/2016.
  */
 
+import com.ifeed.model.base.IdentifiableEntity;
+
 import javax.persistence.*;
 
 @Entity

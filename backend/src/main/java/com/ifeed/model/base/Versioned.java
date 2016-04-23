@@ -1,4 +1,4 @@
-package com.ifeed.model;
+package com.ifeed.model.base;
 
 /**
  * @author: Eser Tukat

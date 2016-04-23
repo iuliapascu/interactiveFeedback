@@ -1,6 +1,6 @@
 package com.ifeed.mapper;
 
-import com.ifeed.model.IdentifiableEntity;
+import com.ifeed.model.base.IdentifiableEntity;
 import com.ifeed.model.dto.AbstractDatabaseEntityDTO;
 import org.springframework.stereotype.Service;
 

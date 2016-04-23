@@ -1,6 +1,6 @@
 package com.ifeed.mapper;
 
-import com.ifeed.model.IdentifiableEntity;
+import com.ifeed.model.base.IdentifiableEntity;
 import org.springframework.stereotype.Service;
 
 @Service

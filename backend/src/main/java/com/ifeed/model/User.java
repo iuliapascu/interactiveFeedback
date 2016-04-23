@@ -1,5 +1,6 @@
 package com.ifeed.model;
 
+import com.ifeed.model.base.IdentifiableEntity;
 import com.ifeed.model.enums.UserRole;
 
 import javax.persistence.*;

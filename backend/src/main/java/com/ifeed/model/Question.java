@@ -1,5 +1,7 @@
 package com.ifeed.model;
 
+import com.ifeed.model.base.IdentifiableEntity;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 

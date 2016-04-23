@@ -1,7 +1,7 @@
 package com.ifeed.model.dto;
 
-import com.ifeed.model.Identifiable;
-import com.ifeed.model.Versioned;
+import com.ifeed.model.base.Identifiable;
+import com.ifeed.model.base.Versioned;
 
 public abstract class AbstractDatabaseEntityDTO implements Identifiable, Versioned {
     private Long id;
