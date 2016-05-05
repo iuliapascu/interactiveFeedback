@@ -1,14 +1,12 @@
 <div class="table-responsive">
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th class="col-md-9">{{'name' | translate}}</th>
-            <th class="col-md-3">{{'code' | translate}}</th>
-        </tr>
-        </thead>
-    </table>
     <div class="scrollable">
         <table class="table table-hover table-scrollable">
+            <thead>
+                <tr>
+                    <th class="col-md-9">{{'name' | translate}}</th>
+                    <th class="col-md-3">{{'code' | translate}}</th>
+                </tr>
+            </thead>
             <tbody>
                 <tr *ngFor="#course of getCourses()" (click)="selectCourse(course)">
                     <td class="col-md-9">{{course.name}}</td>

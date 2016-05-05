@@ -57,6 +57,19 @@ table tr:hover {
     float: left;
 }
 
+/* answers styling */
+.answerTable {
+    margin-top: 15px;
+}
+
+.answerTable th {
+    border-top: 0px;
+}
+
+.answerTable th, .answerTable td {
+    padding: .25rem;
+}
+
 /*top level navigation style*/
 #topNavBar {
     background-color: #003366;

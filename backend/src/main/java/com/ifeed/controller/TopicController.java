@@ -34,7 +34,7 @@ public class TopicController {
 
     @RequestMapping(value = "/save", method = RequestMethod.GET)
     @ResponseBody
-    public TopicDTO saveCourse(@RequestParam(value = "id", required = false) final Long id,
+    public TopicDTO saveTopic(@RequestParam(value = "id", required = false) final Long id,
                                 @RequestParam(value = "version", required = false) final Integer version,
                                 @RequestParam(value = "title", required = false) final String title,
                                 @RequestParam(value = "position", required = false) final Integer position,

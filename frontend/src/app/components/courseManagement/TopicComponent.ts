@@ -31,7 +31,9 @@ export default class TopicComponent {
 
     public getTopics(): Array<Topic> {
         if (this.allTopics == null) {
-            this.queryTopics();
+            setTimeout(() => {
+                this.queryTopics();
+            }, 100);
         }
         return this.allTopics;
     }
@@ -79,7 +81,6 @@ export default class TopicComponent {
     }
 
     public setEditMode(val: boolean, topic: Topic){
-        alert(topic.title)
         this.editMode = val;
         this.selectedTopic = val? topic : null;
     }

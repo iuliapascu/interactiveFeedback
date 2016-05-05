@@ -18,5 +18,11 @@
   "save": "Save",
   "cancel": "Cancel",
   "topics": "Topics",
-  "add_topic": "Add topic"
+  "add_topic": "Add topic",
+  "new_topic": "New topic",
+  "answers": "Answers",
+  "add_answer": "New answer",
+  "text": "Text",
+  "is_correct": "Correct",
+  "actions": "Actions"
 }

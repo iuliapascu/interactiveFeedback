@@ -5,11 +5,12 @@ import Question from "../../data/Question";
 import QuestionsService from "../../services/QuestionsService";
 import {Observable} from "rxjs/Observable";
 import Course from "../../data/Course";
+import AnswerComponent from "./AnswerComponent";
 
 @Component({
     selector: 'question-list',
     templateUrl: 'app/components/courseManagement/question-component.html',
-    directives: [],
+    directives: [AnswerComponent],
     pipes: [TranslatePipe]
 })
 export default class QuestionComponent {
@@ -31,7 +32,9 @@ export default class QuestionComponent {
 
     public getQuestions(): Array<Question> {
         if (this.allQuestions == null) {
-            this.queryQuestions();
+            setTimeout(() => {
+                this.queryQuestions();
+            }, 100);
         }
         return this.allQuestions;
     }

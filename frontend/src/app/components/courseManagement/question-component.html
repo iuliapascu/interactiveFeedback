@@ -17,6 +17,7 @@
                 <div *ngIf="!editMode">
                     <div><span><b><u>{{question.title}}</u></b></span></div>
                     <div><span><i>{{question.requirement}}</i></span></div>
+                    <answer-list class="col-md-12" [selectedQuestion]="question"></answer-list>
                 </div>
                 <div *ngIf="editMode">
                     <label>{{'title' | translate}}</label><input class="form-control" [ngModel]="question.title" #title>
