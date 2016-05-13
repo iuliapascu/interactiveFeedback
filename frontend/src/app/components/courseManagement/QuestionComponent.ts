@@ -49,7 +49,12 @@ export default class QuestionComponent {
     }
 
     public saveQuestion(question:Question) {
-        this.questionsService.saveQuestion(question).subscribe(() => {});
+        let savedQuestion: Observable<Question> =  this.questionsService.saveQuestion(question);
+        savedQuestion.subscribe(
+            savedQuestion => {
+                this.selectedQuestion = savedQuestion;
+            }
+        );
     }
 
     public editQuestion(question:Question, title:HTMLInputElement, requirement: HTMLTextAreaElement) {
