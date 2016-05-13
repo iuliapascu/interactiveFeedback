@@ -1,4 +1,4 @@
-<div class="col-md-8" >
+<div class="col-md-10" >
     <table class="table table-scrollable answerTable">
         <thead>
             <tr>
@@ -18,7 +18,7 @@
         <tr *ngFor="#answer of getAnswers()">
             <td>
                 <span *ngIf="!isSelectedAnswer(answer)">{{answer.text}}</span>
-                <input *ngIf="isSelectedAnswer(answer)" type="text" class="form-control" [ngModel]="answer.text" (ngModelChange)="selectedAnswer.text=$event">
+                <input *ngIf="isSelectedAnswer(answer)" class="form-control" [ngModel]="answer.text" (ngModelChange)="selectedAnswer.text=$event">
             </td>
             <td>
                 <div *ngIf="!isSelectedAnswer(answer) && answer.isCorrect"><span class="fa faw fa-check"></span></div>
@@ -34,7 +34,7 @@
         </tr>
         <tr *ngIf="newAnswerDisplayed">
             <td>
-                <input type="text" class="form-control" [(ngModel)]="newAnswer.text">
+                <input class="form-control" [(ngModel)]="newAnswer.text">
             </td>
             <td>
                 <input type="checkbox" [(ngModel)]="newAnswer.isCorrect"/>

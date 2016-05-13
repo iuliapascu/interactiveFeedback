@@ -92,4 +92,8 @@ export default class QuestionComponent {
     public setEditMode(val: boolean){
         this.editMode = val;
     }
+
+    public isSelectedQuestion(question: Question) {
+        return this.selectedQuestion != null && this.selectedQuestion.id == question.id;
+    }
 }

@@ -4,11 +4,11 @@
     <table class="table table-scrollable">
         <tbody>
         <tr *ngFor="#question of getQuestions()">
-            <td *ngIf="selectedQuestion != question">
+            <td *ngIf="!isSelectedQuestion(question)">
                 <div class="left"><span>{{question.title}}</span></div>
                 <div class="right"><button class="btn btn-primary smallBtn" (click)="displayQuestionDetails(question)"><span class="fa faw fa-chevron-down"></span></button></div>
             </td>
-            <td *ngIf="selectedQuestion == question">
+            <td *ngIf="isSelectedQuestion(question)">
                 <div>
                     <button class="btn btn-primary smallBtn" (click)="setNoSelectedQuestion()"><span class="fa faw fa-chevron-up"></span></button>
                     <button class="btn btn-primary smallBtn editBtn" (click)="removeQuestion(question)"><span class="fa faw fa-trash-o"></span></button>
