@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface TopicRepository extends JpaRepository<Topic, Long> {
 
-    @Query("SELECT t FROM Topic as t WHERE t.course.id = :courseId ORDER BY t.position ASC")
-    List<Topic> findCourseTopicsOrderedByPosition(@Param("courseId") long courseId);
+    @Query("SELECT t FROM Topic as t WHERE t.course.id = :courseId ORDER BY t.title ASC")
+    List<Topic> findCourseTopicsOrderedByTitle(@Param("courseId") long courseId);
 
 }

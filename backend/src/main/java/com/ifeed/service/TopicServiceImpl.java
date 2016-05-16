@@ -28,7 +28,7 @@ public class TopicServiceImpl implements TopicService{
 
     @Override
     public List<TopicDTO> getAllCourseTopics(Long courseId) {
-        return mapper.map(topicRepository.findCourseTopicsOrderedByPosition(courseId));
+        return mapper.map(topicRepository.findCourseTopicsOrderedByTitle(courseId));
     }
 
     @Override
