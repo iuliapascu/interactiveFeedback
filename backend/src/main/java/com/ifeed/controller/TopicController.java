@@ -67,18 +67,18 @@ public class TopicController {
         return questionTopics;
     }
 
-    @RequestMapping(value = "/assignTopicQuestion", method = RequestMethod.GET)
+    @RequestMapping(value = "/assign", method = RequestMethod.GET)
     @ResponseBody
-    public TopicQuestionDTO assignTopicQuestion(@RequestParam(value = "topicId", required = true) final Long topicId,
-                                              @RequestParam(value = "questionId", required = true) final Long questionId) {
+    public TopicQuestionDTO assign(@RequestParam(value = "topicId", required = true) final Long topicId,
+                                   @RequestParam(value = "questionId", required = true) final Long questionId) {
 
         return topicQuestionService.save(new TopicQuestionDTO(topicId, questionId));
     }
 
-    @RequestMapping(value = "/unassignTopicQuestion", method = RequestMethod.GET)
+    @RequestMapping(value = "/unassign", method = RequestMethod.GET)
     @ResponseBody
-    public TopicQuestionDTO unassignTopicQuestion(@RequestParam(value = "topicId", required = true) final Long topicId,
-                                                @RequestParam(value = "questionId", required = true) final Long questionId) {
+    public TopicQuestionDTO unassign(@RequestParam(value = "topicId", required = true) final Long topicId,
+                                     @RequestParam(value = "questionId", required = true) final Long questionId) {
         TopicQuestionDTO removedTopic = topicQuestionService.find(topicId, questionId);
         topicQuestionService.remove(topicId, questionId);
         return removedTopic;

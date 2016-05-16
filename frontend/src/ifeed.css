@@ -21,6 +21,27 @@ body {
     margin: 10px;
 }
 
+.blueBordered {
+    border: 1px solid #003366;
+}
+
+.grayBordered {
+    border: 1px solid #eceeef;
+}
+
+.bordered {
+    margin: 10px;
+}
+
+.bordered table td, .bordered table th {
+    padding: 2px;
+    vertical-align: middle;
+}
+
+.bordered table th {
+    border: 0;
+}
+
 .controlBtns {
     padding-top: 10px;
     padding-bottom: 10px;

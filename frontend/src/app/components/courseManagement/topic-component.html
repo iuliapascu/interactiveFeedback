@@ -13,8 +13,14 @@
                 <div>
                     <span><b>{{topic.title}}</b></span>
                 </div>
-                <div class="col-md-12">
+                <div *ngIf="!(selectedTopic == topic && assignMode) && (topic.questions != null && topic.questions.length > 0)" class="col-md-10 bordered grayBordered">
                     <table class="table table-scrollable">
+                        <thead>
+                        <tr>
+                            <th>{{'assigned.questions' | translate}}</th>
+                            <th></th>
+                        </tr>
+                        </thead>
                         <tbody>
                         <tr *ngFor="#question of topic.questions">
                             <td><span>{{question.title}}</span></td>
@@ -23,12 +29,12 @@
                         </tbody>
                     </table>
                 </div>
-                <div *ngIf="selectedTopic == topic && assignMode" class="col-md-8">
+                <div *ngIf="selectedTopic == topic && assignMode" class="col-md-8 bordered blueBordered">
                     <table class="table table-scrollable">
                         <thead>
                         <tr>
-                            <th>{{'questions' | translate}}</th>
-                            <th>{{'question.assign' | translate}}</th>
+                            <th>{{'topic.assign' | translate}}</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>

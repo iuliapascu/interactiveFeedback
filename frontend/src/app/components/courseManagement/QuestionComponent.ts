@@ -1,4 +1,4 @@
-import {Component, Input} from "angular2/core";
+import {Component, Input, Output, EventEmitter} from "angular2/core";
 import {TranslatePipe} from "ng2-translate";
 import QuestionsResponse from "../../data/QuestionsResponse";
 import Question from "../../data/Question";
@@ -20,6 +20,7 @@ import TopicQuestionsResponse from "../../data/TopicQuestionsResponse";
 })
 export default class QuestionComponent {
     @Input() private selectedCourse:Course;
+    @Output() public onQuestionChangedEvent: EventEmitter<any> = new EventEmitter();
 
     private searchResult:Observable<QuestionsResponse>;
     private allQuestions: Array<Question>;
@@ -75,17 +76,20 @@ export default class QuestionComponent {
         this.questionsService.saveQuestion(question).subscribe(() => {});
         this.setEditMode(false);
         this.setAssignMode(false);
+        this.fireQuestionChangedEvent(null);
     }
 
     public addQuestion(newQuestion: Question) {
         this.saveQuestion(newQuestion);
         this.resetNewQuestion();
         this.allQuestions = null;
+        this.fireQuestionChangedEvent(null);
     }
 
     public removeQuestion(question:Question) {
         this.questionsService.removeQuestion(question).subscribe(() => {});
         this.allQuestions = null;
+        this.fireQuestionChangedEvent(null);
     }
 
     public displayNewQuestion() {
@@ -173,5 +177,9 @@ export default class QuestionComponent {
             this.topicsService.unassignTopicQuestion(question.id, topic.id);
         }
 
+    }
+
+    public fireQuestionChangedEvent(evt) {
+        this.onQuestionChangedEvent.emit(null);
     }
 }

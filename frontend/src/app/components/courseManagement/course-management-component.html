@@ -9,10 +9,10 @@
 
 
     <div class="col-md-6">
-        <topic-list [selectedCourse]="selectedCourse"></topic-list>
+        <topic-list [selectedCourse]="selectedCourse" #topicList></topic-list>
     </div>
     <div class="col-md-6">
-        <question-list [selectedCourse]="selectedCourse"></question-list>
+        <question-list [selectedCourse]="selectedCourse" (onQuestionChangedEvent)="topicList.handleOnQuestionChangedEvent($event)"></question-list>
     </div>
 
 </div>

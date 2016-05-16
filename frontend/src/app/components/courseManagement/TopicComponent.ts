@@ -129,4 +129,8 @@ export default class TopicComponent {
     public assignQuestion(question: Question, topic: Topic) {
         this.topicsService.assignTopicQuestion(question.id, topic.id);
     }
+
+    handleOnQuestionChangedEvent(arg) {
+        this.allTopics = null;
+    }
 }

@@ -31,5 +31,6 @@
   "details.show": "Show details",
   "details.hide": "Hide details",
   "assign": "Assign",
-  "finish": "Finish"
+  "finish": "Finish",
+  "assigned.questions": "Assigned questions"
 }

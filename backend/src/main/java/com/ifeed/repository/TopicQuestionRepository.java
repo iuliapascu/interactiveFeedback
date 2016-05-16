@@ -2,9 +2,11 @@ package com.ifeed.repository;
 
 import com.ifeed.model.TopicQuestion;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,7 +19,9 @@ public interface TopicQuestionRepository extends JpaRepository<TopicQuestion, Lo
     @Query("SELECT tq FROM TopicQuestion as tq WHERE tq.topic.id = :topicId AND tq.question.id = :questionId")
     TopicQuestion findOne(@Param("topicId") long topicId, @Param("questionId") long questionId);
 
-    @Query("DELETE FROM TopicQuestion as tq WHERE tq.topic.id = :topicId AND tq.question.id = :questionId")
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM TopicQuestion as tq WHERE (tq.topic.id = :topicId AND tq.question.id = :questionId)")
     void delete(@Param("topicId") long topicId, @Param("questionId") long questionId);
 
     @Query("SELECT tq.question.id FROM TopicQuestion as tq WHERE tq.topic.id = :topicId")

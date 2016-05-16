@@ -62,7 +62,7 @@ export default class TopicsService {
         this.api.setDefaultSearchParam('topicId=' + topicId);
         this.api.setDefaultSearchParam('questionId=' + questionId);
 
-        jsonData = this.api.getJson('/assignTopicQuestion');
+        jsonData = this.api.getJson('/assign');
         return jsonData.map((data) => TopicQuestion.fromJson(data));
     }
 
@@ -73,7 +73,7 @@ export default class TopicsService {
         this.api.setDefaultSearchParam('topicId=' + topicId);
         this.api.setDefaultSearchParam('questionId=' + questionId);
 
-        jsonData = this.api.getJson('/unassignTopicQuestion');
+        jsonData = this.api.getJson('/unassign');
         return jsonData.map((data) => TopicQuestion.fromJson(data));
     }
 }

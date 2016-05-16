@@ -2,6 +2,7 @@ package com.ifeed.service;
 
 import com.ifeed.mapper.QuestionMapper;
 import com.ifeed.model.Question;
+import com.ifeed.model.dto.AnswerDTO;
 import com.ifeed.model.dto.QuestionDTO;
 import com.ifeed.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,13 @@ public class QuestionServiceImpl implements QuestionService{
 
     private QuestionRepository questionRepository;
     private QuestionMapper mapper;
+    private AnswerService answerService;
 
     @Autowired
-    public QuestionServiceImpl(QuestionRepository questionRepository, QuestionMapper questionMapper) {
+    public QuestionServiceImpl(QuestionRepository questionRepository, QuestionMapper questionMapper, AnswerService answerService) {
         this.questionRepository = questionRepository;
         this.mapper = questionMapper;
+        this.answerService = answerService;
     }
 
     @Override
@@ -65,6 +68,10 @@ public class QuestionServiceImpl implements QuestionService{
     @Override
     public void remove(Long questionId) {
         if (questionId != null) {
+            List<AnswerDTO> questionAnswers = answerService.getAllQuestionAnswers(questionId);
+            for (AnswerDTO answer: questionAnswers) {
+                answerService.remove(answer.getId());
+            }
             questionRepository.delete(questionId);
         }
     }
