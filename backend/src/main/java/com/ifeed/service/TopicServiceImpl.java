@@ -32,6 +32,11 @@ public class TopicServiceImpl implements TopicService{
     }
 
     @Override
+    public List<TopicDTO> getTopicsForIds(List<Long> ids) {
+        return mapper.map(topicRepository.findAll(ids));
+    }
+
+    @Override
     public TopicDTO find(long id) {
         Topic topic = topicRepository.findOne(id);
         if (topic == null) {

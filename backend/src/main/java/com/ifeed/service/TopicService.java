@@ -16,4 +16,6 @@ public interface TopicService {
     TopicDTO save(TopicDTO topic);
 
     void remove(Long topicId);
+
+    List<TopicDTO> getTopicsForIds(List<Long> ids);
 }

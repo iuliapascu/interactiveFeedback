@@ -32,6 +32,11 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
+    public List<QuestionDTO> getQuestionsForIds(List<Long> ids) {
+        return mapper.map(questionRepository.findAll(ids));
+    }
+
+    @Override
     public QuestionDTO find(long id) {
         Question question = questionRepository.findOne(id);
         if (question == null) {

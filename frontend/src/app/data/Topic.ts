@@ -1,20 +1,29 @@
+import Question from "./Question";
 export default class Topic {
 
     constructor(public id?:number,
                 public version?:number,
                 public title?:string,
                 public position?:number,
-                public courseId?:number) {
+                public courseId?:number,
+                public questions?: Array<Question>) {
         this.position = 0;
     }
 
     static fromJson(json:any):Topic {
+        let questions:Array<Question> = [];
+        if (json['questions'] != null) {
+            json['questions'].forEach((cur) => {
+                questions.push(Question.fromJson(cur));
+            });
+        }
         return new Topic(
             json['id'],
             json['version'],
             json['title'],
             json['position'],
-            json['courseId']);
+            json['courseId'],
+            questions);
     }
 
     public getProperties(): any {
@@ -29,5 +38,15 @@ export default class Topic {
         results.push('courseId=' + this.courseId);
 
         return results;
+    }
+
+    public isQuestionAssigned(question: Question): boolean {
+        let result: boolean = false;
+        this.questions.forEach(q => {
+            if (q.id == question.id) {
+                result = true;
+            }
+        });
+        return result;
     }
 }

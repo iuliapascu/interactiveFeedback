@@ -3,6 +3,7 @@ package com.ifeed.model.dto;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Created by Iulia-Anamaria Pascu on 3/29/2016.
@@ -17,6 +18,8 @@ public class TopicDTO extends AbstractDatabaseEntityDTO{
 
     @NotNull
     private Long courseId;
+
+    private List<QuestionDTO> questions;
 
     public TopicDTO() {
 
@@ -52,5 +55,13 @@ public class TopicDTO extends AbstractDatabaseEntityDTO{
 
     public void setCourseId(Long courseId) {
         this.courseId = courseId;
+    }
+
+    public List<QuestionDTO> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<QuestionDTO> questions) {
+        this.questions = questions;
     }
 }

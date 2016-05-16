@@ -6,18 +6,38 @@
         <tr *ngFor="#question of getQuestions()">
             <td *ngIf="!isSelectedQuestion(question)">
                 <div class="left"><span>{{question.title}}</span></div>
-                <div class="right"><button class="btn btn-primary smallBtn" (click)="displayQuestionDetails(question)"><span class="fa faw fa-chevron-down"></span></button></div>
+                <div class="right"><button class="btn btn-primary smallBtn" (click)="displayQuestionDetails(question)" data-toggle="tooltip" title="{{'details.show' | translate}}"><span class="fa faw fa-chevron-down"></span></button></div>
             </td>
             <td *ngIf="isSelectedQuestion(question)">
                 <div>
-                    <button class="btn btn-primary smallBtn" (click)="setNoSelectedQuestion()"><span class="fa faw fa-chevron-up"></span></button>
-                    <button class="btn btn-primary smallBtn editBtn" (click)="removeQuestion(question)"><span class="fa faw fa-trash-o"></span></button>
-                    <button class="btn btn-primary smallBtn editBtn" (click)="setEditMode(true)"><span class="fa faw fa-pencil-square-o"></span></button>
+                    <button class="btn btn-primary smallBtn" (click)="setNoSelectedQuestion()" data-toggle="tooltip" title="{{'details.hide' | translate}}"><span class="fa faw fa-chevron-up"></span></button>
+                    <button class="btn btn-primary smallBtn editBtn" (click)="removeQuestion(question)" data-toggle="tooltip" title="{{'remove' | translate}}"><span class="fa faw fa-trash-o"></span></button>
+                    <button class="btn btn-primary smallBtn editBtn" (click)="setEditMode(true)" data-toggle="tooltip" title="{{'edit' | translate}}"><span class="fa faw fa-pencil-square-o"></span></button>
+                    <button class="btn btn-primary smallBtn editBtn" (click)="setAssignMode(true)" data-toggle="tooltip" title="{{'question.assign' | translate}}"><span class="fa faw fa-exchange"></span></button>
                 </div>
                 <div *ngIf="!editMode">
                     <div><span><b><u>{{question.title}}</u></b></span></div>
                     <div><span><i>{{question.requirement}}</i></span></div>
-                    <answer-list class="col-md-12" [selectedQuestion]="question"></answer-list>
+                    <answer-list *ngIf="!assignMode" class="col-md-12" [selectedQuestion]="question"></answer-list>
+                    <div *ngIf="assignMode">
+                        <table class="table table-scrollable">
+                            <thead>
+                                <tr>
+                                    <th>{{'topics' | translate}}</th>
+                                    <th>{{'assign' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <button class="btn btn-primary" (click)="setAssignMode(false)">{{'finish' | translate}}</button>
+                            </tfoot>
+                            <tbody>
+                            <tr *ngFor="#topic of getAllTopics()">
+                                <td><span>{{topic.title}}</span></td>
+                                <td><input #assignedcb type="checkbox" [ngModel]="isTopicQuestionAssigned(topic)" (change)="assignTopicQuestion(question, topic, assignedcb.checked)"/></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div *ngIf="editMode">
                     <label>{{'title' | translate}}</label><input class="form-control" [ngModel]="question.title" #title>
@@ -28,8 +48,6 @@
                     </div>
                 </div>
                 <br>
-                <!-- display answers -->
-                <!-- assign to topic -->
             </td>
         </tr>
         </tbody>

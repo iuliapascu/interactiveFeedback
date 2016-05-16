@@ -8,9 +8,37 @@
                 <div>
                     <button class="btn btn-primary smallBtn editBtn" (click)="removeTopic(topic)"><span class="fa faw fa-trash-o"></span></button>
                     <button class="btn btn-primary smallBtn editBtn" (click)="setEditMode(true, topic)"><span class="fa faw fa-pencil-square-o"></span></button>
+                    <button class="btn btn-primary smallBtn editBtn" (click)="setAssignMode(true, topic)" data-toggle="tooltip" title="{{'topic.assign' | translate}}"><span class="fa faw fa-exchange"></span></button>
                 </div>
                 <div>
                     <span><b>{{topic.title}}</b></span>
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-scrollable">
+                        <tbody>
+                        <tr *ngFor="#question of topic.questions">
+                            <td><span>{{question.title}}</span></td>
+                            <td><button class="btn btn-primary smallBtn editBtn" (click)="unassignQuestion(question, topic)"><span class="fa faw fa-times"></span></button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div *ngIf="selectedTopic == topic && assignMode" class="col-md-8">
+                    <table class="table table-scrollable">
+                        <thead>
+                        <tr>
+                            <th>{{'questions' | translate}}</th>
+                            <th>{{'question.assign' | translate}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="#question of getSelectedTopicUnassignedQuestions()">
+                            <td><span>{{question.title}}</span></td>
+                            <td><button class="btn btn-primary smallBtn editBtn" (click)="assignQuestion(question, topic)"><span class="fa faw fa-plus"></span></button></td>
+                        </tr>
+                        </tbody>
+                        <tfoot><button class="btn btn-primary" (click)="setAssignMode(false, null)">{{'finish' | translate}}</button></tfoot>
+                    </table>
                 </div>
             </td>
             <td *ngIf="selectedTopic == topic && editMode">

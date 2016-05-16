@@ -24,5 +24,12 @@
   "add_answer": "New answer",
   "text": "Text",
   "is_correct": "Correct",
-  "actions": "Actions"
+  "actions": "Actions",
+  "question.assign": "Assign to topic",
+  "topic.assign": "Assign question",
+  "edit": "Edit",
+  "details.show": "Show details",
+  "details.hide": "Hide details",
+  "assign": "Assign",
+  "finish": "Finish"
 }
