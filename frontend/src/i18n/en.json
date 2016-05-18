@@ -32,5 +32,11 @@
   "details.hide": "Hide details",
   "assign": "Assign",
   "finish": "Finish",
-  "assigned.questions": "Assigned questions"
+  "assigned.questions": "Assigned questions",
+  "create.event": "Create an event",
+  "participate.event": "Participate in event",
+  "selected.questions": "Selected questions",
+  "preparation": "Preparation step",
+  "presentation": "Presentation step",
+  "solution": "Solution step"
 }

@@ -1,0 +1,23 @@
+SOLUTION STEP
+
+<!--<div id="canvasDiv" class="col-md-10 col-md-offset-1">
+    <div id="canvasContainer"><canvas id="canvas"></canvas></div>
+</div>-->
+
+<table class="table table-scrollable">
+    <tbody>
+    <tr *ngFor="#answer of allUserAnswers">
+        <td>
+            <div>
+                <span><b>{{answer.title}}</b></span>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div id="canvasDiv" class="col-md-10 col-md-offset-1" style="width: 100%; height: 100%;">
+    <canvas id="canvas" style="width: 100%; height: auto;"></canvas>
+</div>
+<div id="js-legend" class="chart-legend">
+</div>

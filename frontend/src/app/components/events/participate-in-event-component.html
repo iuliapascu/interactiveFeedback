@@ -1,0 +1,53 @@
+<div class="eventComponent">
+    <h3 class="bigFont">{{'participate.event' | translate}}: {{selectedEvent.name}}</h3>
+    <div class="col-md-4">
+        <h4 class="bigFont">{{'questions' | translate}}</h4>
+        <table class="table table-scrollable">
+            <tbody>
+            <tr *ngFor="#question of selectedEvent.questions">
+                <td [ngClass]="{'selectedQuestion':isSelectedQuestion(question)}" (click)="selectQuestion(question)">
+                    <div ><span><b>{{question.title}}</b></span></div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-8 leftBordered">
+        <div id="topNavBar">
+            <nav class="navbar navbar-inverse">
+                <ul class="nav pull-left">
+                    <li><span class="boldFont" [ngClass]="{'selected':selectedStep==0}" (click)="selectStep(0)">{{'preparation' | translate}}</span></li>
+                    <li><span class="boldFont" [ngClass]="{'selected':selectedStep==1}" (click)="selectStep(1)">{{'presentation' | translate}}</span></li>
+                    <li><span class="boldFont" [ngClass]="{'selected':selectedStep==2}" (click)="selectStep(2)">{{'solution' | translate}}</span></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div *ngIf="selectedQuestion != null">
+            <div *ngIf="selectedStep == 0 || selectedStep == 1">
+                <div><span><b><u>{{selectedQuestion.title}}</u></b></span></div>
+                <div><span><i>{{selectedQuestion.requirement}}</i></span></div>
+                <table class="table table-scrollable answerTable">
+                    <thead>
+                    <tr>
+                        <th>{{'answers' | translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="#answer of selectedQuestionAnswers">
+                        <td><span>{{answer.text}}</span></td>
+                        <td><div *ngIf="answer.isCorrect"><span class="fa faw fa-check"></span></div></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="selectedStep == 1">
+                    --Also open a new window--
+                </div>
+            </div>
+
+            <div *ngIf="selectedStep == 2">
+                <solution-step [selectedQuestion]="selectedQuestion"></solution-step>
+            </div>
+        </div>
+    </div>
+</div>

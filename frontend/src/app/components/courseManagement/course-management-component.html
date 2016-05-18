@@ -4,15 +4,27 @@
 </div>
 
 <div *ngIf="courseSelected">
-    <h2 class="bigFont">{{'course_management' | translate}}</h2>
-    <h4 class="bigFont">{{selectedCourse.name}}</h4>
+    <button *ngIf="!createEventMode && !participateInEventMode" class="btn btn-primary newBtn" (click)="setCreateEventMode(true)">{{'create.event' | translate}}</button>
+    <h2 class="bigFont">{{'course_management' | translate}} - {{selectedCourse.name}}</h2>
 
 
-    <div class="col-md-6">
-        <topic-list [selectedCourse]="selectedCourse" #topicList></topic-list>
+    <div *ngIf="createEventMode">
+        <div>
+            <create-event (onEventCreatedEvent)="handleOnEventCreatedEvent($event)" [selectedCourse]="selectedCourse"></create-event>
+        </div>
     </div>
-    <div class="col-md-6">
-        <question-list [selectedCourse]="selectedCourse" (onQuestionChangedEvent)="topicList.handleOnQuestionChangedEvent($event)"></question-list>
+    <div *ngIf="participateInEventMode">
+        <div>
+            <participate-in-event [selectedEvent]="selectedEvent"></participate-in-event>
+        </div>
+    </div>
+    <div *ngIf="!createEventMode && !participateInEventMode">
+        <div class="col-md-6">
+            <topic-list [selectedCourse]="selectedCourse" #topicList></topic-list>
+        </div>
+        <div class="col-md-6">
+            <question-list [selectedCourse]="selectedCourse" (onQuestionChangedEvent)="topicList.handleOnQuestionChangedEvent($event)"></question-list>
+        </div>
     </div>
 
 </div>
