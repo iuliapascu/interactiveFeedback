@@ -14,7 +14,7 @@ import javax.persistence.EntityManager;
  */
 @Component
 public class TopicQuestionMapper extends CollectionMapper<TopicQuestion, TopicQuestionDTO> {
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Autowired
     public TopicQuestionMapper(EntityManager entityManager) {

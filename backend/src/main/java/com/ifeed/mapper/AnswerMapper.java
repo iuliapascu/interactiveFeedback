@@ -13,7 +13,7 @@ import javax.persistence.EntityManager;
  */
 @Component
 public class AnswerMapper extends CollectionMapper<Answer, AnswerDTO> {
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Autowired
     public AnswerMapper(EntityManager entityManager) {

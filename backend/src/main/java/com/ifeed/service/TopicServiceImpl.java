@@ -17,8 +17,8 @@ import java.util.List;
 @Transactional(rollbackFor = Throwable.class)
 public class TopicServiceImpl implements TopicService{
 
-    private TopicRepository topicRepository;
-    private TopicMapper mapper;
+    private final TopicRepository topicRepository;
+    private final TopicMapper mapper;
 
     @Autowired
     public TopicServiceImpl(TopicRepository topicRepository, TopicMapper topicMapper) {
