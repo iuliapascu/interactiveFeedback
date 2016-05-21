@@ -1,5 +1,6 @@
 package com.ifeed.service;
 
+import com.ifeed.exception.EntityInUseException;
 import com.ifeed.model.dto.QuestionDTO;
 
 import java.util.List;
@@ -13,10 +14,10 @@ public interface QuestionService {
 
     QuestionDTO save(QuestionDTO question);
 
-    void remove(Long questionId);
+    void remove(Long questionId) throws EntityInUseException;
 
     List<QuestionDTO> getAllQuestions();
 
-    List<QuestionDTO> getQuestionsForIds(List<Long> ids);
+    List<QuestionDTO> getQuestionsByTopicId(Long id);
 
 }

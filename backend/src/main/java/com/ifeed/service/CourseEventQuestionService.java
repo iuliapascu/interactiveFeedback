@@ -13,6 +13,8 @@ public interface CourseEventQuestionService {
 
     List<CourseEventQuestionDTO> getAllCourseEventQuestionsByCourseEventId(Long courseEventId);
 
+    Integer findCountQuestionAssignments(long questionId);
+
     CourseEventQuestionDTO save(CourseEventQuestionDTO courseEventQuestion);
 
     void addEntitiesWithIds(Long questionEventId, List<Long> questionIds);

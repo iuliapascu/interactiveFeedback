@@ -1,5 +1,6 @@
 package com.ifeed.service;
 
+import com.ifeed.exception.EntityInUseException;
 import com.ifeed.mapper.QuestionMapper;
 import com.ifeed.model.Question;
 import com.ifeed.model.dto.AnswerDTO;
@@ -18,15 +19,22 @@ import java.util.List;
 @Transactional(rollbackFor = Throwable.class)
 public class QuestionServiceImpl implements QuestionService{
 
-    private QuestionRepository questionRepository;
-    private QuestionMapper mapper;
-    private AnswerService answerService;
+    private final QuestionRepository questionRepository;
+    private final QuestionMapper mapper;
+
+    private final AnswerService answerService;
+    private final TopicQuestionService topicQuestionService;
+    private final CourseEventQuestionService courseEventQuestionService;
 
     @Autowired
-    public QuestionServiceImpl(QuestionRepository questionRepository, QuestionMapper questionMapper, AnswerService answerService) {
+    public QuestionServiceImpl(QuestionRepository questionRepository, QuestionMapper questionMapper,
+                               AnswerService answerService, TopicQuestionService topicQuestionService,
+                               CourseEventQuestionService courseEventQuestionService) {
         this.questionRepository = questionRepository;
         this.mapper = questionMapper;
         this.answerService = answerService;
+        this.topicQuestionService = topicQuestionService;
+        this.courseEventQuestionService = courseEventQuestionService;
     }
 
     @Override
@@ -35,7 +43,8 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public List<QuestionDTO> getQuestionsForIds(List<Long> ids) {
+    public List<QuestionDTO> getQuestionsByTopicId(Long id) {
+        List<Long> ids = topicQuestionService.getAllTopicQuestionIds(id);
         return mapper.map(questionRepository.findAll(ids));
     }
 
@@ -66,7 +75,13 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public void remove(Long questionId) {
+    public void remove(Long questionId) throws EntityInUseException{
+        if (topicQuestionService.getCountQuestionTopics(questionId) > 0) {
+            throw new EntityInUseException("Remove not allowed. The question is assigned to one or more topics.");
+        }
+        if (courseEventQuestionService.findCountQuestionAssignments(questionId) > 0) {
+            throw new EntityInUseException("Remove not allowed. The question is used in one or more events.");
+        }
         if (questionId != null) {
             List<AnswerDTO> questionAnswers = answerService.getAllQuestionAnswers(questionId);
             for (AnswerDTO answer: questionAnswers) {

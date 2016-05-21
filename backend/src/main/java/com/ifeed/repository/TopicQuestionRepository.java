@@ -30,4 +30,10 @@ public interface TopicQuestionRepository extends JpaRepository<TopicQuestion, Lo
     @Query("SELECT tq.topic.id FROM TopicQuestion as tq WHERE tq.question.id = :questionId")
     List<Long> findQuestionTopicIds(@Param("questionId") long questionId);
 
+    @Query("SELECT COUNT(tq) FROM TopicQuestion as tq WHERE tq.question.id = :questionId")
+    Integer getCountQuestionTopics(@Param("questionId") long questionId);
+
+    @Query("SELECT COUNT(tq) FROM TopicQuestion as tq WHERE tq.topic.id = :topicId")
+    Integer getCountTopicQuestions(@Param("topicId") long topicId);
+
 }

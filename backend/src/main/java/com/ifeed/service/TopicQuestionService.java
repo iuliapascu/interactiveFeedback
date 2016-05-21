@@ -1,7 +1,5 @@
 package com.ifeed.service;
 
-import com.ifeed.model.dto.QuestionDTO;
-import com.ifeed.model.dto.TopicDTO;
 import com.ifeed.model.dto.TopicQuestionDTO;
 
 import java.util.List;
@@ -13,9 +11,13 @@ public interface TopicQuestionService {
 
     TopicQuestionDTO find(Long topicId, Long questionId);
 
-    List<QuestionDTO> getAllTopicQuestions(Long topicId);
+    List<Long> getAllTopicQuestionIds(Long topicId);
 
-    List<TopicDTO> getAllQuestionTopics(Long questionId);
+    Integer getCountTopicQuestions(Long topicId);
+
+    List<Long> getAllQuestionTopicIds(Long questionId);
+
+    Integer getCountQuestionTopics(Long questionId);
 
     TopicQuestionDTO save(TopicQuestionDTO topicQuestion);
 

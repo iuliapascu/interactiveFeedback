@@ -1,10 +1,14 @@
 package com.ifeed.controller;
 
+import com.ifeed.exception.EntityInUseException;
 import com.ifeed.model.dto.TopicDTO;
 import com.ifeed.model.dto.TopicQuestionDTO;
+import com.ifeed.service.QuestionService;
 import com.ifeed.service.TopicQuestionService;
 import com.ifeed.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,11 +21,13 @@ import java.util.List;
 @RequestMapping(value = "/topics")
 public class TopicController {
     private TopicService topicService;
+    private QuestionService questionService;
     private TopicQuestionService topicQuestionService;
 
     @Autowired
-    public TopicController(TopicService topicService, TopicQuestionService topicQuestionService) {
+    public TopicController(TopicService topicService, QuestionService questionService, TopicQuestionService topicQuestionService) {
         this.topicService = topicService;
+        this.questionService = questionService;
         this.topicQuestionService = topicQuestionService;
     }
 
@@ -31,7 +37,7 @@ public class TopicController {
         List<TopicDTO> topics = topicService.getAllCourseTopics(id);
 
         for (TopicDTO dto : topics) {
-            dto.setQuestions(topicQuestionService.getAllTopicQuestions(dto.getId()));
+            dto.setQuestions(questionService.getQuestionsByTopicId(dto.getId()));
         }
 
         return topics;
@@ -46,16 +52,20 @@ public class TopicController {
 
     @RequestMapping(value = "/remove", method = RequestMethod.GET)
     @ResponseBody
-    public TopicDTO removeTopic(@RequestParam(value = "id", required = true) final Long id) {
+    public ResponseEntity removeTopic(@RequestParam(value = "id", required = true) final Long id) {
         TopicDTO removedTopic = topicService.find(id);
-        topicService.remove(id);
-        return removedTopic;
+        try {
+            topicService.remove(id);
+        } catch (EntityInUseException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }
+        return new ResponseEntity<>(removedTopic ,HttpStatus.OK);
     }
 
     @RequestMapping(value="/questionTopics", method = RequestMethod.GET)
     @ResponseBody
     public List<TopicDTO> listAllQuestionTopics(@RequestParam(value = "questionId", required = true) final Long questionId) {
-        List<TopicDTO> questionTopics = topicQuestionService.getAllQuestionTopics(questionId);
+        List<TopicDTO> questionTopics = topicService.getTopicsByQuestionId(questionId);
 
         return questionTopics;
     }

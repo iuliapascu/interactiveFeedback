@@ -40,6 +40,11 @@ public class CourseEventQuestionServiceImpl implements CourseEventQuestionServic
     }
 
     @Override
+    public Integer findCountQuestionAssignments(long questionId) {
+        return courseEventQuestionRepository.findCountQuestionAssignments(questionId);
+    }
+
+    @Override
     public CourseEventQuestionDTO find(long id) {
         CourseEventQuestion courseEventQuestion = courseEventQuestionRepository.findOne(id);
         if (courseEventQuestion == null) {

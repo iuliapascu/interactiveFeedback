@@ -2,8 +2,6 @@ package com.ifeed.service;
 
 import com.ifeed.mapper.TopicQuestionMapper;
 import com.ifeed.model.TopicQuestion;
-import com.ifeed.model.dto.QuestionDTO;
-import com.ifeed.model.dto.TopicDTO;
 import com.ifeed.model.dto.TopicQuestionDTO;
 import com.ifeed.repository.TopicQuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,27 +18,32 @@ import java.util.List;
 public class TopicQuestionServiceImpl implements TopicQuestionService {
 
     private TopicQuestionRepository topicQuestionRepository;
-    private QuestionService questionService;
-    private TopicService topicService;
     private TopicQuestionMapper mapper;
 
     @Autowired
-    public TopicQuestionServiceImpl(TopicQuestionRepository topicQuestionRepository, TopicQuestionMapper mapper,
-                                    QuestionService questionService, TopicService topicService) {
+    public TopicQuestionServiceImpl(TopicQuestionRepository topicQuestionRepository, TopicQuestionMapper mapper) {
         this.topicQuestionRepository = topicQuestionRepository;
         this.mapper = mapper;
-        this.questionService = questionService;
-        this.topicService = topicService;
     }
 
     @Override
-    public List<QuestionDTO> getAllTopicQuestions(Long topicId) {
-        return questionService.getQuestionsForIds(topicQuestionRepository.findTopicQuestionIds(topicId));
+    public List<Long> getAllTopicQuestionIds(Long topicId) {
+        return topicQuestionRepository.findTopicQuestionIds(topicId);
     }
 
     @Override
-    public List<TopicDTO> getAllQuestionTopics(Long questionId) {
-        return topicService.getTopicsForIds(topicQuestionRepository.findQuestionTopicIds(questionId));
+    public Integer getCountTopicQuestions(Long topicId) {
+        return topicQuestionRepository.getCountTopicQuestions(topicId);
+    }
+
+    @Override
+    public List<Long> getAllQuestionTopicIds(Long questionId) {
+        return topicQuestionRepository.findQuestionTopicIds(questionId);
+    }
+
+    @Override
+    public Integer getCountQuestionTopics(Long questionId) {
+        return topicQuestionRepository.getCountQuestionTopics(questionId);
     }
 
     @Override

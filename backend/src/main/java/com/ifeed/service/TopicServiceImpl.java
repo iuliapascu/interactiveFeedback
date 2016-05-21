@@ -1,5 +1,6 @@
 package com.ifeed.service;
 
+import com.ifeed.exception.EntityInUseException;
 import com.ifeed.mapper.TopicMapper;
 import com.ifeed.model.Topic;
 import com.ifeed.model.dto.TopicDTO;
@@ -20,10 +21,14 @@ public class TopicServiceImpl implements TopicService{
     private final TopicRepository topicRepository;
     private final TopicMapper mapper;
 
+    private final TopicQuestionService topicQuestionService;
+
     @Autowired
-    public TopicServiceImpl(TopicRepository topicRepository, TopicMapper topicMapper) {
+    public TopicServiceImpl(TopicRepository topicRepository, TopicMapper topicMapper,
+                            TopicQuestionService topicQuestionService) {
         this.topicRepository = topicRepository;
         this.mapper = topicMapper;
+        this.topicQuestionService = topicQuestionService;
     }
 
     @Override
@@ -32,7 +37,8 @@ public class TopicServiceImpl implements TopicService{
     }
 
     @Override
-    public List<TopicDTO> getTopicsForIds(List<Long> ids) {
+    public List<TopicDTO> getTopicsByQuestionId(Long id) {
+        List<Long> ids = topicQuestionService.getAllQuestionTopicIds(id);
         return mapper.map(topicRepository.findAll(ids));
     }
 
@@ -63,7 +69,10 @@ public class TopicServiceImpl implements TopicService{
     }
 
     @Override
-    public void remove(Long topicId) {
+    public void remove(Long topicId) throws EntityInUseException{
+        if (topicQuestionService.getCountTopicQuestions(topicId) > 0) {
+            throw new EntityInUseException("Remove not allowed. The topic has questions assigned.");
+        }
         if (topicId != null) {
             topicRepository.delete(topicId);
         }

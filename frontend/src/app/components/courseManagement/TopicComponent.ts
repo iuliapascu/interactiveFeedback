@@ -81,8 +81,10 @@ export default class TopicComponent {
     }
 
     public removeTopic(topic:Topic) {
-        this.topicsService.removeTopic(topic).subscribe(() => {});
-        this.allTopics = null;
+        this.topicsService.removeTopic(topic).subscribe(
+            () => this.allTopics = null,
+            error => alert(error._body)
+        );
     }
 
     public displayNewTopic() {

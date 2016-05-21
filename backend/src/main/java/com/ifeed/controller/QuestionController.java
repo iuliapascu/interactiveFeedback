@@ -1,8 +1,11 @@
 package com.ifeed.controller;
 
+import com.ifeed.exception.EntityInUseException;
 import com.ifeed.model.dto.QuestionDTO;
 import com.ifeed.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,10 +47,14 @@ public class QuestionController {
 
     @RequestMapping(value = "/remove", method = RequestMethod.GET)
     @ResponseBody
-    public QuestionDTO removeQuestion(@RequestParam(value = "id", required = true) final Long id) {
+    public ResponseEntity removeQuestion(@RequestParam(value = "id", required = true) final Long id) {
         QuestionDTO removedQuestion = questionService.find(id);
-        questionService.remove(id);
-        return removedQuestion;
+        try {
+            questionService.remove(id);
+        } catch (EntityInUseException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }
+        return new ResponseEntity<>(removedQuestion ,HttpStatus.OK);
     }
 
 }

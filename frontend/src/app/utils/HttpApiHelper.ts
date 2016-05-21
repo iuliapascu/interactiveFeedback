@@ -1,6 +1,5 @@
 import {Observable} from 'rxjs/Observable';
 import {Http, Response, Headers, RequestOptionsArgs} from 'angular2/http';
-import HttpUtils from "./HttpUtils";
 
 export default class HttpApiHelper {
     private defaultHeaderKeys: Array<string> = [];
@@ -88,20 +87,11 @@ export default class HttpApiHelper {
     }
 
     private getJsonInternal(url:string, options?:RequestOptionsArgs):Observable<any> {
-        return HttpUtils.mapErrorStatusToError(
-            this.http.get(url, options))
-            .map((response:Response) => {
-                // console.log(response.json());
-                return response.json();
-            });
+        return this.http.get(url, options).map((res: Response) => res.json());
     }
 
     private postJsonInternal(url:string, body:string, options:RequestOptionsArgs):Observable<any> {
-        return HttpUtils.mapErrorStatusToError(
-            this.http.post(url, body, options))
-            .map((response:Response) => {
-                return response.json();
-            });
+        return this.http.post(url, body, options).map((res: Response) => res.json());
     }
 }
 

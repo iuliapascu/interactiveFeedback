@@ -1,5 +1,6 @@
 package com.ifeed.service;
 
+import com.ifeed.exception.EntityInUseException;
 import com.ifeed.model.dto.TopicDTO;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface TopicService {
 
     TopicDTO save(TopicDTO topic);
 
-    void remove(Long topicId);
+    void remove(Long topicId) throws EntityInUseException;
 
-    List<TopicDTO> getTopicsForIds(List<Long> ids);
+    List<TopicDTO> getTopicsByQuestionId(Long id);
 }

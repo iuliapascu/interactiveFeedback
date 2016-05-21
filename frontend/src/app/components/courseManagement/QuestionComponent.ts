@@ -87,9 +87,10 @@ export default class QuestionComponent {
     }
 
     public removeQuestion(question:Question) {
-        this.questionsService.removeQuestion(question).subscribe(() => {});
-        this.allQuestions = null;
-        this.fireQuestionChangedEvent(null);
+        this.questionsService.removeQuestion(question).subscribe(
+            () => this.allQuestions = null,
+            error => alert(error._body)
+        );
     }
 
     public displayNewQuestion() {
