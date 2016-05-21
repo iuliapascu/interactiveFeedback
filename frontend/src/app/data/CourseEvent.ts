@@ -1,25 +1,20 @@
-import Question from "./Question";
+import CourseEventQuestion from "./CourseEventQuestion";
+
 export default class CourseEvent {
 
-    constructor(public id?:number,
-                public version?:number,
-                public name?:string,
-                public date?:string,
-                public questions?:Array<Question>,
-                public questionStates?: Map<number, number>) {
+    constructor(public id?: number,
+                public version?: number,
+                public name?: string,
+                public date?: string,
+                public courseId?: number,
+                public questions?: Array<CourseEventQuestion>) {
     }
 
     static fromJson(json:any):CourseEvent {
-        let questions:Array<Question> = [];
+        let questions:Array<CourseEventQuestion> = [];
         if (json['questions'] != null) {
             json['questions'].forEach((cur) => {
-                questions.push(Question.fromJson(cur));
-            });
-        }
-        let questionStates:Map<number, number> = new Map<number, number>();
-        if (json['questionStates'] != null) {
-            json['questions'].forEach((cur) => {
-                questionStates.set(cur['questionId'], cur['state']);
+                questions.push(CourseEventQuestion.fromJson(cur));
             });
         }
         return new CourseEvent(
@@ -27,11 +22,11 @@ export default class CourseEvent {
             json['version'],
             json['name'],
             json['date'],
-            questions,
-            questionStates);
+            json['courseId'],
+            questions);
     }
 
-    public getProperties(): any {
+    public getProperties(): Array<string> {
         let results: Array<string> = [];
 
         if (this.id != null && this.version != null) {
@@ -40,13 +35,21 @@ export default class CourseEvent {
         }
         results.push('name=' + this.name);
         results.push('date=' + this.date);
+        results.push('courseId=' + this.courseId);
 
-        let questionList = "[";
-        this.questions.forEach(crt => {
+        return results;
+    }
+
+    public static getQuestionIds(questions: Array<any>): Array<string> {
+        let results: Array<string> = [];
+
+        let questionList = "";
+        questions.forEach(crt => {
             questionList += crt.id + ",";
         });
+        questionList = questionList.slice(0, -1);
 
-        questionList = questionList.slice(0, -1) + "]";
+        results.push('questionList=' + questionList);
 
         return results;
     }

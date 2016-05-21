@@ -10,6 +10,7 @@ import CoursesService from "./app/services/CoursesService";
 import QuestionsService from "./app/services/QuestionsService";
 import TopicsService from "./app/services/TopicsService";
 import AnswersService from "./app/services/AnswersService";
+import CourseEventsService from "./app/services/CourseEventsService";
 
 bootstrap(IFeedApplication, [HTTP_PROVIDERS, TranslateService, TranslatePipe, LogoutService, CoursesService,
-                             QuestionsService, TopicsService, AnswersService]);
+                             QuestionsService, TopicsService, AnswersService, CourseEventsService]);

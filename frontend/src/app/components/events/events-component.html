@@ -1,1 +1,27 @@
 <h2 class="bigFont">{{'events' | translate}}</h2>
+<button *ngIf="courseSelected && !eventSelected" class="btn btn-primary newBtn" (click)="handleOnSelectedCourseEvent(null)">{{'change.course' | translate}}</button>
+<button *ngIf="eventSelected" class="btn btn-primary newBtn" (click)="selectCourseEvent(null)">{{'change.event' | translate}}</button>
+
+<div *ngIf="!courseSelected">
+    <h4 class="bigFont">{{'select_course' | translate}}</h4>
+    <course-list (onCourseSelectedEvent)="handleOnSelectedCourseEvent($event)"></course-list>
+</div>
+
+<div *ngIf="courseSelected">
+
+    <div *ngIf="!eventSelected">
+        <div class="table-responsive scrollable">
+            <table class="table table-hover table-scrollable">
+            <tbody>
+                <tr *ngFor="#courseEvent of getCourseEvents()" (click)="selectCourseEvent(courseEvent)">
+                    <td class="col-md-9">{{courseEvent.name}}</td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div *ngIf="eventSelected">
+        <participate-in-event [selectedEvent]="selectedCourseEvent"></participate-in-event>
+    </div>
+</div>

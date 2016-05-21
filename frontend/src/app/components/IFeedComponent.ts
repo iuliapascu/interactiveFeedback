@@ -18,7 +18,7 @@ export default class IFeedComponent {
 
     constructor(public translate:TranslateService, private logoutService:LogoutService) {
         translate.use('en');
-        this.selectedPage = 0;
+        this.selectedPage = 1;
     }
 
     public selectPage(selectedPage:number) {
@@ -27,5 +27,9 @@ export default class IFeedComponent {
 
     public logout() {
         this.logoutService.logout();
+    }
+
+    handleOnEventCreatedEvent(event: any) {
+        this.selectPage(0);
     }
 }

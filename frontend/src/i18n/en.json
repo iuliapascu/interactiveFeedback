@@ -38,5 +38,8 @@
   "selected.questions": "Selected questions",
   "preparation": "Preparation step",
   "presentation": "Presentation step",
-  "solution": "Solution step"
+  "solution": "Solution step",
+  "discussion": "Discussion step",
+  "change.event": "Change event",
+  "change.course": "Change course"
 }

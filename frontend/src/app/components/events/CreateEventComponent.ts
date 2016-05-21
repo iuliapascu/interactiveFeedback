@@ -8,6 +8,7 @@ import Question from "../../data/Question";
 import CourseEvent from "../../data/CourseEvent";
 import {Observable} from "rxjs/Observable";
 import TopicsResponse from "../../data/TopicsResponse";
+import CourseEventsService from "../../services/CourseEventsService";
 
 
 @Component({
@@ -23,12 +24,12 @@ export default class CreateEventComponent {
     private allTopics: Array<Topic>;
     private selectedQuestions: Array<Question>;
     //TODO: use a datetimepicker
-    private SELECTED_DATETIME: string = "17/05/16 12:00:00 +00:00";
+    private SELECTED_DATETIME: string = "17/05/16";
     //TODO: use a given name
     private NAME: string = "Demo Event";
     private createdEvent: CourseEvent;
 
-    constructor(private questionsService:QuestionsService, private topicsService:TopicsService) {
+    constructor(private courseEventsService:CourseEventsService, private topicsService:TopicsService) {
         this.allTopics = null;
         this.selectedQuestions = [];
         this.createdEvent = new CourseEvent();
@@ -77,16 +78,11 @@ export default class CreateEventComponent {
 
     public createEvent() {
         if (this.selectedQuestions != null && this.selectedQuestions.length > 0) {
-            this.createdEvent.questions = this.selectedQuestions;
             this.createdEvent.date = this.SELECTED_DATETIME;
             this.createdEvent.name = this.NAME;
+            this.createdEvent.courseId = this.selectedCourse.id;
 
-            let questionStates: Map<number, number> = new Map<number, number>();
-            this.selectedQuestions.forEach( crt => {
-                questionStates.set(crt.id, 0);
-            });
-
-            this.createdEvent.questionStates = questionStates;
+            this.courseEventsService.saveCourseEvent(this.createdEvent, this.selectedQuestions);
 
             this.fireEventCreatedEvent(this.createdEvent)
         }

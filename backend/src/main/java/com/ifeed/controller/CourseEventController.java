@@ -1,9 +1,6 @@
 package com.ifeed.controller;
 
-import com.ifeed.model.CourseEventQuestion;
 import com.ifeed.model.dto.CourseEventDTO;
-import com.ifeed.model.dto.CourseEventQuestionDTO;
-import com.ifeed.service.CourseEventQuestionService;
 import com.ifeed.service.CourseEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

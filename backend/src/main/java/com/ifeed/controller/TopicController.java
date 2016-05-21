@@ -6,10 +6,7 @@ import com.ifeed.service.TopicQuestionService;
 import com.ifeed.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,13 +39,9 @@ public class TopicController {
 
     @RequestMapping(value = "/save", method = RequestMethod.GET)
     @ResponseBody
-    public TopicDTO saveTopic(@RequestParam(value = "id", required = false) final Long id,
-                                @RequestParam(value = "version", required = false) final Integer version,
-                                @RequestParam(value = "title", required = false) final String title,
-                                @RequestParam(value = "position", required = false) final Integer position,
-                                @RequestParam(value = "courseId", required = false) final Long courseId) {
+    public TopicDTO saveTopic(@ModelAttribute TopicDTO topic) {
 
-        return topicService.save(new TopicDTO(id, version, title, position, courseId));
+        return topicService.save(topic);
     }
 
     @RequestMapping(value = "/remove", method = RequestMethod.GET)

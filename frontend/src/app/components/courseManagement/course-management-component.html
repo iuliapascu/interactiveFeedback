@@ -4,7 +4,7 @@
 </div>
 
 <div *ngIf="courseSelected">
-    <button *ngIf="!createEventMode && !participateInEventMode" class="btn btn-primary newBtn" (click)="setCreateEventMode(true)">{{'create.event' | translate}}</button>
+    <button *ngIf="!createEventMode" class="btn btn-primary newBtn" (click)="setCreateEventMode(true)">{{'create.event' | translate}}</button>
     <h2 class="bigFont">{{'course_management' | translate}} - {{selectedCourse.name}}</h2>
 
 
@@ -13,12 +13,7 @@
             <create-event (onEventCreatedEvent)="handleOnEventCreatedEvent($event)" [selectedCourse]="selectedCourse"></create-event>
         </div>
     </div>
-    <div *ngIf="participateInEventMode">
-        <div>
-            <participate-in-event [selectedEvent]="selectedEvent"></participate-in-event>
-        </div>
-    </div>
-    <div *ngIf="!createEventMode && !participateInEventMode">
+    <div *ngIf="!createEventMode">
         <div class="col-md-6">
             <topic-list [selectedCourse]="selectedCourse" #topicList></topic-list>
         </div>
