@@ -125,11 +125,15 @@ export default class TopicComponent {
     }
 
     public unassignQuestion(question: Question, topic: Topic) {
-        this.topicsService.unassignTopicQuestion(question.id, topic.id);
+        this.topicsService.unassignTopicQuestion(question.id, topic.id).subscribe(
+            () => this.allTopics = null
+        );
     }
 
     public assignQuestion(question: Question, topic: Topic) {
-        this.topicsService.assignTopicQuestion(question.id, topic.id);
+        this.topicsService.assignTopicQuestion(question.id, topic.id).subscribe(
+            () => this.allTopics = null
+        );
     }
 
     handleOnQuestionChangedEvent(arg) {

@@ -82,11 +82,14 @@ export default class CreateEventComponent {
             this.createdEvent.name = this.NAME;
             this.createdEvent.courseId = this.selectedCourse.id;
 
-            this.courseEventsService.saveCourseEvent(this.createdEvent, this.selectedQuestions);
+            this.courseEventsService.saveCourseEvent(this.createdEvent, this.selectedQuestions).subscribe(
+                (evt:CourseEvent) => this.createdEvent.id = evt.id
+            );
 
             this.fireEventCreatedEvent(this.createdEvent)
+        } else {
+            alert("Please select at least one question!");
         }
-        //TODO: else - alert error msg + check other fields
 
     }
 

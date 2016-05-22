@@ -173,9 +173,13 @@ export default class QuestionComponent {
 
     public assignTopicQuestion(question: Question, topic: Topic, assign: boolean) {
         if (assign) {
-            this.topicsService.assignTopicQuestion(question.id, topic.id);
+            this.topicsService.assignTopicQuestion(question.id, topic.id).subscribe( (data) => {
+                this.fireQuestionChangedEvent(data);
+            });
         } else {
-            this.topicsService.unassignTopicQuestion(question.id, topic.id);
+            this.topicsService.unassignTopicQuestion(question.id, topic.id).subscribe( (data) => {
+                this.fireQuestionChangedEvent(data)
+            });
         }
 
     }
