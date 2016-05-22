@@ -29,12 +29,16 @@ export default class CourseManagementComponent {
     }
 
     handleOnSelectedCourseEvent(course: Course) {
-        this.courseSelected = true;
+        this.courseSelected = (course != null);
         this.selectedCourse = course;
     }
 
     handleOnEventCreatedEvent(event: CourseEvent) {
         this.createEventMode = false;
         this.onEventCreatedEvent.emit(event);
+    }
+
+    handleOnEventCanceledEvent(event: any) {
+        this.createEventMode = false;
     }
 }

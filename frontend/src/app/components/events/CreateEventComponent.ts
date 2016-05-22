@@ -20,6 +20,7 @@ import CourseEventsService from "../../services/CourseEventsService";
 export default class CreateEventComponent {
     @Input() private selectedCourse:Course;
     @Output() public onEventCreatedEvent: EventEmitter<any> = new EventEmitter();
+    @Output() public onEventCanceledEvent: EventEmitter<any> = new EventEmitter();
 
     private allTopics: Array<Topic>;
     private selectedQuestions: Array<Question>;
@@ -93,8 +94,19 @@ export default class CreateEventComponent {
 
     }
 
+    public cancelEvent() {
+        this.fireEventCanceled();
+        this.createdEvent = null;
+        this.selectedQuestions = null;
+        this.allTopics = null;
+    }
+
     public fireEventCreatedEvent(evt: CourseEvent) {
         this.onEventCreatedEvent.emit(evt);
+    }
+
+    public fireEventCanceled() {
+        this.onEventCanceledEvent.emit(null);
     }
 
 }

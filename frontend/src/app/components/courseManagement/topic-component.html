@@ -8,7 +8,7 @@
                 <div>
                     <button class="btn btn-primary smallBtn editBtn" (click)="removeTopic(topic)"><span class="fa faw fa-trash-o"></span></button>
                     <button class="btn btn-primary smallBtn editBtn" (click)="setEditMode(true, topic)"><span class="fa faw fa-pencil-square-o"></span></button>
-                    <button class="btn btn-primary smallBtn editBtn" (click)="setAssignMode(true, topic)" data-toggle="tooltip" title="{{'topic.assign' | translate}}"><span class="fa faw fa-exchange"></span></button>
+                    <button class="btn btn-primary smallBtn editBtn" (click)="setAssignMode(true, topic)" data-toggle="tooltip" title="{{'question.link' | translate}}"><span class="fa faw fa-exchange"></span></button>
                 </div>
                 <div>
                     <span><b>{{topic.title}}</b></span>
@@ -24,7 +24,7 @@
                         <tbody>
                         <tr *ngFor="#question of topic.questions">
                             <td><span>{{question.title}}</span></td>
-                            <td><button class="btn btn-primary smallBtn editBtn" (click)="unassignQuestion(question, topic)"><span class="fa faw fa-times"></span></button></td>
+                            <td><button class="btn btn-primary smallBtn editBtn" (click)="unassignQuestion(question, topic)" data-toggle="tooltip" title="{{'question.unlink' | translate}}"><span class="fa faw fa-unlink"></span></button></td>
                         </tr>
                         </tbody>
                     </table>
@@ -40,7 +40,7 @@
                         <tbody>
                         <tr *ngFor="#question of getSelectedTopicUnassignedQuestions()">
                             <td><span>{{question.title}}</span></td>
-                            <td><button class="btn btn-primary smallBtn editBtn" (click)="assignQuestion(question, topic)"><span class="fa faw fa-plus"></span></button></td>
+                            <td><button class="btn btn-primary smallBtn editBtn" (click)="assignQuestion(question, topic)" data-toggle="tooltip" title="{{'question.link' | translate}}"><span class="fa faw fa-link"></span></button></td>
                         </tr>
                         </tbody>
                         <tfoot><button class="btn btn-primary" (click)="setAssignMode(false, null)">{{'finish' | translate}}</button></tfoot>

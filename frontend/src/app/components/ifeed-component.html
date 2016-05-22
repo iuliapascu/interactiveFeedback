@@ -24,7 +24,7 @@
 
     <div class ="currentComponent">
         <div *ngIf="selectedPage == 0">
-            <events #events></events>
+            <events></events>
         </div>
         <div *ngIf="selectedPage == 1">
             <course-management (onEventCreatedEvent)="handleOnEventCreatedEvent($event)"></course-management>

@@ -26,7 +26,7 @@
   "is_correct": "Correct",
   "actions": "Actions",
   "question.assign": "Assign to topic",
-  "topic.assign": "Assign question",
+  "topic.assign": "Assign questions",
   "edit": "Edit",
   "details.show": "Show details",
   "details.hide": "Hide details",
@@ -34,6 +34,7 @@
   "finish": "Finish",
   "assigned.questions": "Assigned questions",
   "create.event": "Create an event",
+  "select.event": "Select event",
   "participate.event": "Participate in event",
   "selected.questions": "Selected questions",
   "preparation": "Preparation step",
@@ -41,5 +42,7 @@
   "solution": "Solution step",
   "discussion": "Discussion step",
   "change.event": "Change event",
-  "change.course": "Change course"
+  "change.course": "Change course",
+  "question.link": "Link question",
+  "question.unlink": "Unlink question"
 }

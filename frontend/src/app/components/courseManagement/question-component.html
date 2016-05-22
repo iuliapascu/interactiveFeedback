@@ -34,6 +34,10 @@
                             <tr *ngFor="#topic of getAllTopics()">
                                 <td><span>{{topic.title}}</span></td>
                                 <td><input #assignedcb type="checkbox" [ngModel]="isTopicQuestionAssigned(topic)" (change)="assignTopicQuestion(question, topic, assignedcb.checked)"/></td>
+                                <td>
+                                    <span *ngIf="assignedcb.checked" class="fa faw fa-link"></span>
+                                    <span *ngIf="!assignedcb.checked" class="fa faw fa-unlink"></span>
+                                </td>
                             </tr>
                             </tbody>
                         </table>

@@ -3,22 +3,25 @@
     <course-list (onCourseSelectedEvent)="handleOnSelectedCourseEvent($event)"></course-list>
 </div>
 
-<div *ngIf="courseSelected">
-    <button *ngIf="!createEventMode" class="btn btn-primary newBtn" (click)="setCreateEventMode(true)">{{'create.event' | translate}}</button>
-    <h2 class="bigFont">{{'course_management' | translate}} - {{selectedCourse.name}}</h2>
-
-
-    <div *ngIf="createEventMode">
-        <div>
-            <create-event (onEventCreatedEvent)="handleOnEventCreatedEvent($event)" [selectedCourse]="selectedCourse"></create-event>
-        </div>
+<div *ngIf="courseSelected" class="col-md-12">
+    <div class="col-md-6">
+        <h2 class="bigFont">{{'course_management' | translate}} - {{selectedCourse.name}}</h2>
     </div>
+    <div class="col-md-6">
+        <button *ngIf="!createEventMode" class="btn btn-primary newBtn" (click)="setCreateEventMode(true)">{{'create.event' | translate}}</button>
+    </div>
+
+    <create-event *ngIf="createEventMode" [selectedCourse]="selectedCourse"
+                  (onEventCreatedEvent)="handleOnEventCreatedEvent($event)"
+                  (onEventCanceledEvent)="handleOnEventCanceledEvent($event)" >
+    </create-event>
+
     <div *ngIf="!createEventMode">
-        <div class="col-md-6">
-            <topic-list [selectedCourse]="selectedCourse" #topicList></topic-list>
-        </div>
-        <div class="col-md-6">
-            <question-list [selectedCourse]="selectedCourse" (onQuestionChangedEvent)="topicList.handleOnQuestionChangedEvent($event)"></question-list>
+        <topic-list class="col-md-6" [selectedCourse]="selectedCourse" #topicList></topic-list>
+        <question-list class="col-md-6" [selectedCourse]="selectedCourse" (onQuestionChangedEvent)="topicList.handleOnQuestionChangedEvent($event)"></question-list>
+
+        <div class="col-md-12">
+            <button class="btn btn-danger-outline newBtn" (click)="handleOnSelectedCourseEvent(null)">{{'change.course' | translate}}</button>
         </div>
     </div>
 

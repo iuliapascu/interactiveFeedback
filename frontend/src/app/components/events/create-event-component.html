@@ -15,7 +15,8 @@
                         <table class="table table-scrollable">
                             <tbody>
                             <tr *ngFor="#question of topic.questions">
-                                <td [ngClass]="{'selectedQuestion':isSelectedQuestion(question)}" (click)="selectQuestion(question)"><span>{{question.title}}</span></td>
+                                <td [ngClass]="{'selectedQuestion':isSelectedQuestion(question)}"><span>{{question.title}}</span></td>
+                                <td><button class="btn btn-primary smallBtn editBtn" (click)="selectQuestion(question)" data-toggle="tooltip" title="{{'question.link' | translate}}"><span class="fa faw fa-link"></span></button></td>
                             </tr>
                             </tbody>
                         </table>
@@ -32,7 +33,7 @@
             <tr *ngFor="#question of selectedQuestions">
                 <td >
                     <div>
-                        <button class="btn btn-primary smallBtn editBtn" (click)="removeQuestion(question)" data-toggle="tooltip" title="{{'remove' | translate}}"><span class="fa faw fa-trash-o"></span></button>
+                        <button class="btn btn-primary smallBtn editBtn" (click)="removeQuestion(question)" data-toggle="tooltip" title="{{'question.unlink' | translate}}"><span class="fa faw fa-unlink"></span></button>
                     </div>
                     <div>
                         <div><span><b><u>{{question.title}}</u></b></span></div>
@@ -42,6 +43,10 @@
             </tr>
             </tbody>
         </table>
-        <button class="btn btn-primary newBtn" (click)="createEvent()">{{'finish' | translate}}</button>
+    </div>
+
+    <div class="col-md-12 controlBtns">
+        <button class="btn btn-success right" (click)="createEvent()">{{'save' | translate}}<i class="fa fa-fw fa-check"></i></button>
+        <button class="btn btn-danger right" (click)="cancelEvent()">{{'cancel' | translate}}<i class="fa fa-fw fa-times"></i></button>
     </div>
 </div>
