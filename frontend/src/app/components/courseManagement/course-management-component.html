@@ -17,8 +17,8 @@
     </create-event>
 
     <div *ngIf="!createEventMode">
-        <topic-list class="col-md-6" [selectedCourse]="selectedCourse" #topicList></topic-list>
-        <question-list class="col-md-6" [selectedCourse]="selectedCourse" (onQuestionChangedEvent)="topicList.handleOnQuestionChangedEvent($event)"></question-list>
+        <topic-list class="col-md-6" [selectedCourse]="selectedCourse" (onTopicChangedEvent)="questionList.handleOnTopicChangedEvent($event)" #topicList></topic-list>
+        <question-list class="col-md-6" [selectedCourse]="selectedCourse" (onQuestionChangedEvent)="topicList.handleOnQuestionChangedEvent($event)" #questionList></question-list>
 
         <div class="col-md-12">
             <button class="btn btn-danger-outline newBtn" (click)="handleOnSelectedCourseEvent(null)">{{'change.course' | translate}}</button>

@@ -1,16 +1,13 @@
 import {Component, Input, Output, EventEmitter} from "angular2/core";
 import {TranslatePipe} from "ng2-translate";
-import QuestionsResponse from "../../data/QuestionsResponse";
+import Course from "../../data/Course";
 import Question from "../../data/Question";
 import QuestionsService from "../../services/QuestionsService";
-import {Observable} from "rxjs/Observable";
-import Course from "../../data/Course";
-import AnswerComponent from "./AnswerComponent";
+import QuestionsResponse from "../../data/QuestionsResponse";
+import Topic from "../../data/Topic";
 import TopicsService from "../../services/TopicsService";
 import TopicsResponse from "../../data/TopicsResponse";
-import Topic from "../../data/Topic";
-import TopicQuestion from "../../data/TopicQuestion";
-import TopicQuestionsResponse from "../../data/TopicQuestionsResponse";
+import AnswerComponent from "./AnswerComponent";
 
 @Component({
     selector: 'question-list',
@@ -22,14 +19,12 @@ export default class QuestionComponent {
     @Input() private selectedCourse:Course;
     @Output() public onQuestionChangedEvent: EventEmitter<any> = new EventEmitter();
 
-    private searchResult:Observable<QuestionsResponse>;
     private allQuestions: Array<Question>;
 
     private newQuestion:Question;
     private newQuestionDisplayed: boolean;
 
     private selectedQuestion: Question;
-    private selectedQuestionTopics: Array<Topic>;
     private editMode: boolean;
 
     private assignMode: boolean;
@@ -46,26 +41,19 @@ export default class QuestionComponent {
     public getQuestions(): Array<Question> {
         if (this.allQuestions == null) {
             setTimeout(() => {
-                this.queryQuestions();
+                this.questionsService.getQuestions().subscribe(
+                    (searchResult: QuestionsResponse) => this.allQuestions = searchResult.results
+                );
             }, 100);
         }
         return this.allQuestions;
     }
 
-    private queryQuestions() {
-        this.searchResult = this.questionsService.getQuestions();
-        this.searchResult.subscribe(
-            searchResult => {
-                this.allQuestions = searchResult.results;
-            }
-        );
-    }
-
     public saveQuestion(question:Question) {
-        let savedQuestion: Observable<Question> =  this.questionsService.saveQuestion(question);
-        savedQuestion.subscribe(
-            savedQuestion => {
+        this.questionsService.saveQuestion(question).subscribe(
+            (savedQuestion: Question) => {
                 this.selectedQuestion = savedQuestion;
+                this.fireQuestionChangedEvent();
             }
         );
     }
@@ -73,33 +61,33 @@ export default class QuestionComponent {
     public editQuestion(question:Question, title:HTMLInputElement, requirement: HTMLTextAreaElement) {
         question.title = title.value;
         question.requirement = requirement.value;
-        this.questionsService.saveQuestion(question).subscribe(() => {});
+        this.saveQuestion(question);
+
         this.setEditMode(false);
         this.setAssignMode(false);
-        this.fireQuestionChangedEvent(null);
     }
 
     public addQuestion(newQuestion: Question) {
         this.saveQuestion(newQuestion);
-        this.resetNewQuestion();
+        this.displayNewQuestion(false);
         this.allQuestions = null;
-        this.fireQuestionChangedEvent(null);
     }
 
     public removeQuestion(question:Question) {
         this.questionsService.removeQuestion(question).subscribe(
-            () => this.allQuestions = null,
+            () => {
+                this.fireQuestionChangedEvent();
+                this.allQuestions = null;
+            },
             error => alert(error._body)
         );
     }
 
-    public displayNewQuestion() {
-        this.newQuestionDisplayed = true;
-    }
-
-    public resetNewQuestion() {
-        this.newQuestionDisplayed = false;
-        this.newQuestion = new Question();
+    public displayNewQuestion(val: boolean) {
+        this.newQuestionDisplayed = val;
+        if (!val) {
+            this.newQuestion = new Question();
+        }
     }
 
     public setNoSelectedQuestion() {
@@ -114,77 +102,47 @@ export default class QuestionComponent {
         this.setAssignMode(false);
     }
 
-    public setEditMode(val: boolean){
-        this.editMode = val;
-    }
-
     public isSelectedQuestion(question: Question) {
         return this.selectedQuestion != null && this.selectedQuestion.id == question.id;
     }
 
+    public setEditMode(val: boolean){
+        this.editMode = val;
+    }
+
     public setAssignMode(val: boolean) {
         this.assignMode = val;
-        if (val) {
-            this.queryAllTopics();
-           this.querySelectedQuestionTopics();
-        } else {
-            this.allTopics = null;
-            this.selectedQuestionTopics = null;
-        }
-    }
-
-    private queryAllTopics() {
-        let result:Observable<TopicsResponse> = this.topicsService.getTopics(this.selectedCourse.id);
-        result.subscribe(
-            result => {
-                this.allTopics = result.results;
-            }
-        );
-    }
-
-    private querySelectedQuestionTopics() {
-        let result:Observable<TopicsResponse> = this.topicsService.getQuestionTopics(this.selectedQuestion.id);
-        result.subscribe(
-            result => {
-                this.selectedQuestionTopics = result.results;
-            }
-        );
     }
 
     public getAllTopics(): Array<Topic> {
         if (this.allTopics == null) {
             setTimeout(() => {
-                this.queryAllTopics();
+                this.topicsService.getTopics(this.selectedCourse.id).subscribe(
+                    (result:TopicsResponse) => this.allTopics = result.results
+                );
             }, 100);
         }
-        return this.allTopics;
+        return this.allTopics
     }
 
-    public isTopicQuestionAssigned(topic: Topic) {
-        if (this.selectedQuestionTopics != null) {
-            for (var crtTopic of this.selectedQuestionTopics) {
-                if (crtTopic.id == topic.id) {
-                    return true;
-                }
-            }
-        }
-        return false;
+    public isTopicQuestionAssigned(topic: Topic): boolean {
+        return topic.isQuestionAssigned(this.selectedQuestion);
     }
 
     public assignTopicQuestion(question: Question, topic: Topic, assign: boolean) {
         if (assign) {
-            this.topicsService.assignTopicQuestion(question.id, topic.id).subscribe( (data) => {
-                this.fireQuestionChangedEvent(data);
-            });
+            this.topicsService.assignTopicQuestion(question.id, topic.id).subscribe( () => this.fireQuestionChangedEvent());
         } else {
-            this.topicsService.unassignTopicQuestion(question.id, topic.id).subscribe( (data) => {
-                this.fireQuestionChangedEvent(data)
-            });
+            this.topicsService.unassignTopicQuestion(question.id, topic.id).subscribe( () => this.fireQuestionChangedEvent());
         }
 
     }
 
-    public fireQuestionChangedEvent(evt) {
+    public fireQuestionChangedEvent() {
         this.onQuestionChangedEvent.emit(null);
+    }
+
+    handleOnTopicChangedEvent(arg: any) {
+        this.allTopics = null;
     }
 }

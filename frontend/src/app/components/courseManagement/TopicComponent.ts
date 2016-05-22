@@ -1,13 +1,12 @@
-import {Component, Input} from "angular2/core";
+import {Component, Input, Output, EventEmitter} from "angular2/core";
 import {TranslatePipe} from "ng2-translate";
-import TopicsResponse from "../../data/TopicsResponse";
+import Course from "../../data/Course";
 import Topic from "../../data/Topic";
 import TopicsService from "../../services/TopicsService";
-import {Observable} from "rxjs/Observable";
-import Course from "../../data/Course";
+import TopicsResponse from "../../data/TopicsResponse";
 import Question from "../../data/Question";
-import QuestionsResponse from "../../data/QuestionsResponse";
 import QuestionsService from "../../services/QuestionsService";
+import QuestionsResponse from "../../data/QuestionsResponse";
 
 @Component({
     selector: 'topic-list',
@@ -17,83 +16,62 @@ import QuestionsService from "../../services/QuestionsService";
 })
 export default class TopicComponent {
     @Input() private selectedCourse:Course;
+    @Output() public onTopicChangedEvent: EventEmitter<any> = new EventEmitter();
 
-    private searchResult:Observable<TopicsResponse>;
     private allTopics: Array<Topic>;
+    private selectedTopic: Topic;
     private newTopic:Topic;
     private newTopicDisplayed: boolean;
+
     private editMode: boolean;
-    private selectedTopic: Topic;
     private assignMode: boolean;
+
     private allQuestions: Array<Question>;
     private unassignedQuestions: Array<Question>;
 
     constructor(private topicsService:TopicsService, private questionsService: QuestionsService) {
         this.newTopic = new Topic();
-        this.newTopicDisplayed = false;
-        this.editMode = false;
-        this.selectedTopic = null;
     }
 
     public getTopics(): Array<Topic> {
         if (this.allTopics == null) {
             setTimeout(() => {
-                this.queryTopics();
-                this.queryQuestions();
+                this.topicsService.getTopics(this.selectedCourse.id).subscribe(
+                    (searchResult: TopicsResponse) => this.allTopics = searchResult.results
+                );
             }, 100);
         }
         return this.allTopics;
     }
 
-    private queryTopics() {
-        this.searchResult = this.topicsService.getTopics(this.selectedCourse.id);
-        this.searchResult.subscribe(
-            searchResult => {
-                this.allTopics = searchResult.results;
-            }
-        );
-    }
-
-    private queryQuestions() {
-        let searchResult: Observable<QuestionsResponse> = this.questionsService.getQuestions();
-        searchResult.subscribe(
-            searchResult => {
-                this.allQuestions = searchResult.results;
-            }
-        );
-    }
-
     public saveTopic(topic:Topic) {
-        this.topicsService.saveTopic(topic).subscribe(() => {});
+        this.topicsService.saveTopic(topic).subscribe(() => this.fireTopicChangedEvent());
     }
 
     public editTopic(topic:Topic, title:HTMLInputElement) {
         topic.title = title.value;
-        this.topicsService.saveTopic(topic).subscribe(() => {});
+        this.saveTopic(topic);
         this.setEditMode(false, topic)
     }
 
     public addTopic(newTopic: Topic) {
         newTopic.courseId = this.selectedCourse.id;
         this.saveTopic(newTopic);
-        this.resetNewTopic();
-        this.allTopics = null;
+        this.displayNewTopic(false);
     }
 
     public removeTopic(topic:Topic) {
         this.topicsService.removeTopic(topic).subscribe(
-            () => this.allTopics = null,
+            () => this.fireTopicChangedEvent(),
             error => alert(error._body)
         );
     }
 
-    public displayNewTopic() {
-        this.newTopicDisplayed = true;
-    }
-
-    public resetNewTopic() {
-        this.newTopicDisplayed = false;
-        this.newTopic = new Topic();
+    public displayNewTopic(val:boolean) {
+        this.newTopicDisplayed = val;
+        if (!val) {
+            this.newTopic = new Topic();
+        }
     }
 
     public setEditMode(val: boolean, topic: Topic){
@@ -107,36 +85,45 @@ export default class TopicComponent {
         this.assignMode = val;
     }
 
-    public getSelectedTopicUnassignedQuestions() {
-        if (this.unassignedQuestions == null && this.selectedTopic != null) {
-            this.unassignedQuestions = this.getUnassignedQuestions(this.selectedTopic);
+    public getSelectedTopicUnassignedQuestions(): Array<Question> {
+        if (this.unassignedQuestions == null) {
+            if (this.allQuestions == null) {
+                setTimeout(() => {
+                    this.questionsService.getQuestions().subscribe(
+                        (searchResult: QuestionsResponse) => this.allQuestions = searchResult.results
+                    );
+                }, 100);
+            } else {
+                this.unassignedQuestions = [];
+                this.allQuestions.forEach( question => {
+                    if (!this.selectedTopic.isQuestionAssigned(question)) {
+                        this.unassignedQuestions.push(question);
+                    }
+                });
+            }
         }
         return this.unassignedQuestions;
     }
 
-    public getUnassignedQuestions(topic: Topic) {
-        let unassignedTopicQuestions: Array<Question> = [];
-        this.allQuestions.forEach( question => {
-            if (!topic.isQuestionAssigned(question)) {
-                unassignedTopicQuestions.push(question);
-            }
-        });
-        return unassignedTopicQuestions;
-    }
-
     public unassignQuestion(question: Question, topic: Topic) {
         this.topicsService.unassignTopicQuestion(question.id, topic.id).subscribe(
-            () => this.allTopics = null
+            () => this.fireTopicChangedEvent()
         );
     }
 
     public assignQuestion(question: Question, topic: Topic) {
         this.topicsService.assignTopicQuestion(question.id, topic.id).subscribe(
-            () => this.allTopics = null
+            () => this.fireTopicChangedEvent()
         );
     }
 
-    handleOnQuestionChangedEvent(arg) {
+    public fireTopicChangedEvent() {
         this.allTopics = null;
+        this.onTopicChangedEvent.emit(null);
+    }
+
+    handleOnQuestionChangedEvent(arg: any) {
+        this.allTopics = null;
+        this.allQuestions = null;
     }
 }

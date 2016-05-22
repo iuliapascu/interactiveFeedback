@@ -1,5 +1,5 @@
 <div *ngIf="!newTopicDisplayed">
-    <button class="btn btn-primary newBtn" (click)="displayNewTopic()">{{'add_topic' | translate}}<i class="fa fa-fw fa-plus"></i></button>
+    <button class="btn btn-primary newBtn" (click)="displayNewTopic(true)">{{'add_topic' | translate}}<i class="fa fa-fw fa-plus"></i></button>
     <h3 class="bigFont">{{'topics' | translate}}</h3>
     <table class="table table-scrollable">
         <tbody>
@@ -67,7 +67,7 @@
     <label for="tTitle">{{'title' | translate}}</label>
     <input class="form-control" id="tTitle" [(ngModel)]="newTopic.title">
     <div class="controlBtns">
-        <button class="btn btn-danger" (click)="resetNewTopic()">{{'cancel' | translate}}<i class="fa fa-fw fa-times"></i></button>
+        <button class="btn btn-danger" (click)="displayNewTopic(false)">{{'cancel' | translate}}<i class="fa fa-fw fa-times"></i></button>
         <button class="btn btn-success" (click)="addTopic(newTopic)">{{'save' | translate}}<i class="fa fa-fw fa-check"></i></button>
     </div>
 </div>
