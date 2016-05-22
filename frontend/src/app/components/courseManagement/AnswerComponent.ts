@@ -1,7 +1,6 @@
 import {Component, Input} from "angular2/core";
 import {TranslatePipe} from "ng2-translate";
 import AnswersResponse from "../../data/AnswersResponse";
-import {Observable} from "rxjs/Observable";
 import Question from "../../data/Question";
 import Answer from "../../data/Answer";
 import AnswersService from "../../services/AnswersService";
@@ -14,8 +13,8 @@ import AnswersService from "../../services/AnswersService";
 })
 export default class AnswerComponent {
     @Input() private selectedQuestion:Question;
+    @Input() private isNewQuestion:boolean;
 
-    private searchResult:Observable<AnswersResponse>;
     private questionAnswers: Array<Answer>;
     private selectedAnswer: Answer;
     private newAnswer:Answer;
@@ -29,20 +28,18 @@ export default class AnswerComponent {
 
     public getAnswers(): Array<Answer> {
         if (this.questionAnswers == null) {
-            setTimeout(() => {
-                this.queryAnswers();
-            }, 100);
+            if (this.isNewQuestion) {
+                this.questionAnswers = [];
+                this.isNewQuestion = false;
+            } else {
+                setTimeout(() => {
+                    this.answersService.getAnswers(this.selectedQuestion.id).subscribe(
+                        (searchResult: AnswersResponse) => this.questionAnswers = searchResult.results
+                    );
+                }, 100);
+            }
         }
         return this.questionAnswers;
-    }
-
-    private queryAnswers() {
-        this.searchResult = this.answersService.getAnswers(this.selectedQuestion.id);
-        this.searchResult.subscribe(
-            searchResult => {
-                this.questionAnswers = searchResult.results;
-            }
-        );
     }
 
     public saveAnswer(answer:Answer): any {
@@ -52,16 +49,16 @@ export default class AnswerComponent {
     public editAnswer(answer:Answer) {
         answer.text = this.selectedAnswer.text;
         answer.isCorrect = this.selectedAnswer.isCorrect;
-
         this.saveAnswer(answer);
+
         this.setEditMode(false, answer);
     }
 
     public addAnswer() {
         this.newAnswer.questionId = this.selectedQuestion.id;
-
-        this.questionAnswers.push(this.saveAnswer(this.newAnswer));
-        this.resetNewAnswer();
+        this.saveAnswer(this.newAnswer);
+        this.displayNewAnswer(false);
+        this.questionAnswers = null;
     }
 
     public removeAnswer(answer:Answer) {
@@ -69,25 +66,15 @@ export default class AnswerComponent {
         this.questionAnswers = null;
     }
 
-    public displayNewAnswer() {
-        this.newAnswerDisplayed = true;
-    }
-
-    public resetNewAnswer() {
-        this.questionAnswers = null;
-        this.newAnswerDisplayed = false;
-        this.newAnswer = new Answer();
+    public displayNewAnswer(val: boolean) {
+        this.newAnswerDisplayed = val;
+        if (!val) {
+            this.newAnswer = new Answer();
+        }
     }
 
     public setEditMode(editMode: boolean, answer: Answer){
-        if (!editMode) {
-            this.selectedAnswer = null;
-        } else {
-            this.selectedAnswer = new Answer();
-            this.selectedAnswer.id = answer.id;
-            this.selectedAnswer.text = answer.text;
-            this.selectedAnswer.isCorrect = answer.isCorrect;
-        }
+        this.selectedAnswer = editMode? answer : null;
     }
 
     public isSelectedAnswer(answer: Answer) {

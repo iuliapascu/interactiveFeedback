@@ -23,6 +23,7 @@ export default class QuestionComponent {
 
     private newQuestion:Question;
     private newQuestionDisplayed: boolean;
+    public isNewQuestion: boolean;
 
     private selectedQuestion: Question;
     private editMode: boolean;
@@ -69,6 +70,7 @@ export default class QuestionComponent {
 
     public addQuestion(newQuestion: Question) {
         this.saveQuestion(newQuestion);
+        this.isNewQuestion = true;
         this.displayNewQuestion(false);
         this.allQuestions = null;
     }
@@ -98,6 +100,7 @@ export default class QuestionComponent {
 
     public displayQuestionDetails(question) {
         this.selectedQuestion = question;
+        this.isNewQuestion = false;
         this.setEditMode(false);
         this.setAssignMode(false);
     }

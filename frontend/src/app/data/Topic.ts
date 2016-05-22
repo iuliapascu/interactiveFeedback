@@ -42,11 +42,11 @@ export default class Topic {
 
     public isQuestionAssigned(question: Question): boolean {
         let result: boolean = false;
-        this.questions.forEach(q => {
+        for (var q of this.questions) {
             if (q.id == question.id) {
-                result = true;
+                return true;
             }
-        });
-        return result;
+        }
+        return false;
     }
 }

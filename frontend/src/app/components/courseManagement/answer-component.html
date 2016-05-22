@@ -9,7 +9,7 @@
         </thead>
         <tfoot *ngIf="selectedAnswer == null && !newAnswerDisplayed">
             <tr>
-                <td><button class="btn btn-primary" (click)="displayNewAnswer()">{{'add_answer' | translate}}<i class="fa fa-fw fa-plus"></i></button></td>
+                <td><button class="btn btn-primary" (click)="displayNewAnswer(true)">{{'add_answer' | translate}}<i class="fa fa-fw fa-plus"></i></button></td>
                 <td></td>
                 <td></td>
             </tr>
@@ -40,7 +40,7 @@
                 <input type="checkbox" [(ngModel)]="newAnswer.isCorrect"/>
             </td>
             <td>
-                <button class="btn btn-danger smallBtn editBtn" (click)="resetNewAnswer()"><i class="fa fa-fw fa-times"></i></button>
+                <button class="btn btn-danger smallBtn editBtn" (click)="displayNewAnswer(false)"><i class="fa fa-fw fa-times"></i></button>
                 <button class="btn btn-success smallBtn editBtn" (click)="addAnswer()"><i class="fa fa-fw fa-check"></i></button>
             </td>
         </tr>
