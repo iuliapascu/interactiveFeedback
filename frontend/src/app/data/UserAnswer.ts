@@ -15,9 +15,7 @@ export default class UserAnswer {
             json['id'],
             json['version'],
             json['text'],
-            json['correct'],
             json['percentage'],
-            json['title'],
             json['questionId'],
             json['eventId']);
     }
@@ -29,15 +27,11 @@ export default class UserAnswer {
             results.push('id=' + this.id);
             results.push('version=' + this.version);
         }
-        if (this.isCorrect != null) {
-            results.push('correct=' + this.isCorrect);
-        }
 
         if (this.percentage != null) {
             results.push('percentage=' + this.percentage);
         }
 
-        results.push('title=' + this.title);
         results.push('text=' + this.text);
         results.push('questionId=' + this.questionId);
         results.push('eventId=' + this.eventId);

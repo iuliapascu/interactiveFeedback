@@ -13,7 +13,7 @@ public interface AnswerService {
 
     List<AnswerDTO> getAllQuestionAnswers(Long questionId);
 
-    AnswerDTO save(AnswerDTO topic);
+    AnswerDTO save(AnswerDTO answer);
 
     void remove(Long answerId);
 
