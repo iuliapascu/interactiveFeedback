@@ -21,6 +21,9 @@ public class QuestionMapper extends CollectionMapper<Question, QuestionDTO> {
         dto.setVersion(entity.getVersion());
         dto.setTitle(entity.getTitle());
         dto.setRequirement(entity.getRequirement());
+        dto.setQuestionType(entity.getQuestionType());
+        dto.setGoodKeywords(entity.getGoodKeywords());
+        dto.setBadKeywords(entity.getBadKeywords());
 
         return dto;
     }
@@ -33,6 +36,9 @@ public class QuestionMapper extends CollectionMapper<Question, QuestionDTO> {
 
         entity.setTitle(dto.getTitle());
         entity.setRequirement(dto.getRequirement());
+        entity.setQuestionType(dto.getQuestionType());
+        entity.setGoodKeywords(dto.getGoodKeywords());
+        entity.setBadKeywords(dto.getBadKeywords());
     }
 }
 

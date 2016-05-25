@@ -1,9 +1,13 @@
+import {QuestionType} from "./enums/QuestionType";
 export default class Question {
 
     constructor(public id?:number,
                 public version?:number,
                 public title?:string,
-                public requirement?:string) {
+                public requirement?:string,
+                public questionType?:QuestionType,
+                public goodKeywords?:string,
+                public badKeywords?:string) {
     }
 
     static fromJson(json:any):Question {
@@ -11,7 +15,10 @@ export default class Question {
             json['id'],
             json['version'],
             json['title'],
-            json['requirement']);
+            json['requirement'],
+            json['questionType'],
+            json['goodKeywords'],
+            json['badKeywords']);
     }
 
     public getProperties(): any {
@@ -23,6 +30,14 @@ export default class Question {
         }
         results.push('title=' + this.title);
         results.push('requirement=' + this.requirement);
+        results.push('questionType=' + this.questionType);
+
+            if (this.goodKeywords != null) {
+            results.push('goodKeywords=' + this.goodKeywords);
+        }
+        if (this.badKeywords != null) {
+            results.push('badKeywords=' + this.badKeywords);
+        }
 
         return results;
     }

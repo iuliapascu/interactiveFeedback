@@ -1,0 +1,4 @@
+
+ALTER TABLE question ADD COLUMN question_type INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE question ADD COLUMN good_keywords VARCHAR(1000);
+ALTER TABLE question ADD COLUMN bad_keywords VARCHAR(1000);

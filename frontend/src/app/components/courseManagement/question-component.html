@@ -18,6 +18,8 @@
                 <div *ngIf="!editMode">
                     <div><span><b><u>{{question.title}}</u></b></span></div>
                     <div><span><i>{{question.requirement}}</i></span></div>
+                    <br>
+                    <div><span><b>{{'question.type' | translate}}</b>: {{question.questionType | translate}}</span></div>
                     <answer-list *ngIf="!assignMode" class="col-md-12" [selectedQuestion]="question" [isNewQuestion]="isNewQuestion"></answer-list>
                     <div *ngIf="assignMode">
                         <table class="table table-scrollable">
@@ -64,8 +66,13 @@
     <input class="form-control" id="qTitle" [(ngModel)]="newQuestion.title">
     <label for="qRequirement">{{'requirement' | translate}}</label>
     <textarea class="form-control" id="qRequirement" [(ngModel)]="newQuestion.requirement"></textarea>
+    <label for="qType">{{'question.type' | translate}}</label>
+    <select id="qType" class="form-control" [ngModel]="newQuestionType" (change)="newQuestionTypeSelected($event.target.value)">
+        <option disabled selected></option>
+        <option *ngFor="#type of questionTypes" [value]="type">{{type | translate}}</option>
+    </select>
     <div class="controlBtns">
         <button class="btn btn-danger" (click)="displayNewQuestion(false)">{{'cancel' | translate}}<i class="fa fa-fw fa-times"></i></button>
-        <button class="btn btn-success" (click)="addQuestion(newQuestion)">{{'save' | translate}}<i class="fa fa-fw fa-check"></i></button>
+        <button class="btn btn-success" (click)="addQuestion()">{{'save' | translate}}<i class="fa fa-fw fa-check"></i></button>
     </div>
 </div>

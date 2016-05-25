@@ -44,5 +44,10 @@
   "change.event": "Change event",
   "change.course": "Change course",
   "question.link": "Link question",
-  "question.unlink": "Unlink question"
+  "question.unlink": "Unlink question",
+  "question.type": "Question type",
+  "SINGLE_ANSWER": "Single answer",
+  "MULTIPLE_ANSWER": "Multiple answer",
+  "OPEN_TEXT": "Open-end text",
+  "JAVA_CODE": "Java code"
 }

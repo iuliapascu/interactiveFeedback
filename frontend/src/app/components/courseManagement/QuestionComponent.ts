@@ -8,6 +8,7 @@ import Topic from "../../data/Topic";
 import TopicsService from "../../services/TopicsService";
 import TopicsResponse from "../../data/TopicsResponse";
 import AnswerComponent from "./AnswerComponent";
+import {QuestionType} from "../../data/enums/QuestionType";
 
 @Component({
     selector: 'question-list',
@@ -23,6 +24,8 @@ export default class QuestionComponent {
 
     private newQuestion:Question;
     private newQuestionDisplayed: boolean;
+    private newQuestionType:QuestionType;
+    private questionTypes: Array<QuestionType>;
     public isNewQuestion: boolean;
 
     private selectedQuestion: Question;
@@ -34,6 +37,8 @@ export default class QuestionComponent {
     constructor(private questionsService:QuestionsService, private topicsService:TopicsService) {
         this.newQuestion = new Question();
         this.newQuestionDisplayed = false;
+        this.questionTypes = [QuestionType.SINGLE_ANSWER, QuestionType.MULTIPLE_ANSWER, QuestionType.OPEN_TEXT, QuestionType.JAVA_CODE];
+        this.newQuestionType = this.questionTypes[0];
         this.selectedQuestion = null;
         this.editMode = false;
         this.assignMode = false;
@@ -68,11 +73,16 @@ export default class QuestionComponent {
         this.setAssignMode(false);
     }
 
-    public addQuestion(newQuestion: Question) {
-        this.saveQuestion(newQuestion);
+    public addQuestion() {
+        this.newQuestion.questionType = this.newQuestionType;
+        this.saveQuestion(this.newQuestion);
         this.isNewQuestion = true;
         this.displayNewQuestion(false);
         this.allQuestions = null;
+    }
+
+    public newQuestionTypeSelected(type:QuestionType) {
+        this.newQuestionType = type;
     }
 
     public removeQuestion(question:Question) {
@@ -89,6 +99,7 @@ export default class QuestionComponent {
         this.newQuestionDisplayed = val;
         if (!val) {
             this.newQuestion = new Question();
+            this.newQuestionType = this.questionTypes[0];
         }
     }
 
