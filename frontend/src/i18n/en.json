@@ -46,6 +46,8 @@
   "question.link": "Link question",
   "question.unlink": "Unlink question",
   "question.type": "Question type",
+  "question.good.keywords": "Good keywords",
+  "question.bad.keywords": "Bad keywords",
   "SINGLE_ANSWER": "Single answer",
   "MULTIPLE_ANSWER": "Multiple answer",
   "OPEN_TEXT": "Open-end text",

@@ -4,6 +4,7 @@ import AnswersResponse from "../../data/AnswersResponse";
 import Question from "../../data/Question";
 import Answer from "../../data/Answer";
 import AnswersService from "../../services/AnswersService";
+import {QuestionType} from "../../data/enums/QuestionType";
 
 @Component({
     selector: 'answer-list',
@@ -42,8 +43,23 @@ export default class AnswerComponent {
         return this.questionAnswers;
     }
 
-    public saveAnswer(answer:Answer): any {
-        return this.answersService.saveAnswer(answer).subscribe(() => {});
+    public saveAnswer(answer:Answer) {
+        this.answersService.saveAnswer(answer).subscribe((answer:Answer) => {
+            this.makeOtherAnswersFalse(answer);
+            this.questionAnswers = null;
+        });
+    }
+
+    private makeOtherAnswersFalse(answer:Answer) {
+        if (this.selectedQuestion.questionType == QuestionType.SINGLE_ANSWER && this.questionAnswers != null && answer.isCorrect) {
+            for (var a of this.questionAnswers) {
+                if (a.id != answer.id) {
+                    a.isCorrect = false;
+                    this.answersService.saveAnswer(a).subscribe(() => {
+                    });
+                }
+            }
+        }
     }
 
     public editAnswer(answer:Answer) {
@@ -58,7 +74,6 @@ export default class AnswerComponent {
         this.newAnswer.questionId = this.selectedQuestion.id;
         this.saveAnswer(this.newAnswer);
         this.displayNewAnswer(false);
-        this.questionAnswers = null;
     }
 
     public removeAnswer(answer:Answer) {
@@ -79,5 +94,13 @@ export default class AnswerComponent {
 
     public isSelectedAnswer(answer: Answer) {
         return this.selectedAnswer != null && this.selectedAnswer.id == answer.id;
+    }
+
+    public multipleAnswers(): boolean {
+        return this.selectedQuestion.questionType == QuestionType.SINGLE_ANSWER || this.selectedQuestion.questionType == QuestionType.MULTIPLE_ANSWER;
+    }
+
+    public getCountAnswers(): number {
+        return this.questionAnswers == null? 0 : this.questionAnswers.length;
     }
 }

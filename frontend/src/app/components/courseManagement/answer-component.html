@@ -1,4 +1,4 @@
-<div class="col-md-10" >
+<div class="col-md-10" *ngIf="multipleAnswers()">
     <table class="table table-scrollable answerTable">
         <thead>
             <tr>
@@ -46,4 +46,45 @@
         </tr>
         </tbody>
     </table>
+</div>
+<div class="col-md-10" *ngIf="!multipleAnswers()">
+    <table class="table table-scrollable answerTable">
+        <thead>
+            <tr>
+                <th>{{'answers' | translate}}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="#answer of getAnswers()">
+            <td>
+                <span *ngIf="!isSelectedAnswer(answer)">{{answer.text}}</span>
+                <textarea *ngIf="isSelectedAnswer(answer)" class="form-control" [ngModel]="answer.text" (ngModelChange)="selectedAnswer.text=$event"></textarea>
+            </td>
+            <td *ngIf="!isSelectedAnswer(answer)">
+                <button class="btn btn-primary smallBtn editBtn" (click)="removeAnswer(answer)"><span class="fa faw fa-trash-o"></span></button>
+                <button class="btn btn-primary smallBtn editBtn" (click)="setEditMode(true, answer)"><span class="fa faw fa-pencil-square-o"></span></button>
+            </td>
+            <td *ngIf="isSelectedAnswer(answer)">
+                <button class="btn btn-danger smallBtn editBtn" (click)="setEditMode(false, answer)"><i class="fa fa-fw fa-times"></i></button>
+                <button class="btn btn-success smallBtn editBtn" (click)="editAnswer(answer)"><i class="fa fa-fw fa-check"></i></button>
+            </td>
+        </tr>
+        <tr *ngIf="newAnswerDisplayed">
+            <textarea class="form-control" [(ngModel)]="newAnswer.text"></textarea>
+
+            <td>
+                <button class="btn btn-danger smallBtn editBtn" (click)="displayNewAnswer(false)"><i class="fa fa-fw fa-times"></i></button>
+                <button class="btn btn-success smallBtn editBtn" (click)="addAnswer()"><i class="fa fa-fw fa-check"></i></button>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot *ngIf="selectedAnswer == null && !newAnswerDisplayed && getCountAnswers() == 0">
+            <tr>
+                <td><button class="btn btn-primary" (click)="displayNewAnswer(true)">{{'add_answer' | translate}}<i class="fa fa-fw fa-plus"></i></button></td>
+                <td></td>
+            </tr>
+        </tfoot>
+        </table>
+
 </div>

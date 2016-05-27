@@ -17,9 +17,14 @@
                 </div>
                 <div *ngIf="!editMode">
                     <div><span><b><u>{{question.title}}</u></b></span></div>
-                    <div><span><i>{{question.requirement}}</i></span></div>
-                    <br>
-                    <div><span><b>{{'question.type' | translate}}</b>: {{question.questionType | translate}}</span></div>
+                    <div><span><i>{{question.requirement}}</i></span></div><br>
+
+                    <div><span><b>{{'question.type' | translate}}</b>: {{question.questionType | translate}}</span></div><br>
+
+                    <div *ngIf="isOpenText(question)">
+                        <label><b>{{'question.good.keywords' | translate}}</b></label><textarea class="form-control" [ngModel]="question.goodKeywords" readonly></textarea>
+                        <label><b>{{'question.bad.keywords' | translate}}</b></label><textarea class="form-control" [ngModel]="question.badKeywords" readonly></textarea>
+                    </div>
                     <answer-list *ngIf="!assignMode" class="col-md-12" [selectedQuestion]="question" [isNewQuestion]="isNewQuestion"></answer-list>
                     <div *ngIf="assignMode">
                         <table class="table table-scrollable">
@@ -48,8 +53,12 @@
                 <div *ngIf="editMode">
                     <label>{{'title' | translate}}</label><input class="form-control" [ngModel]="question.title" #title>
                     <label>{{'requirement' | translate}}</label><textarea class="form-control" [ngModel]="question.requirement" #req></textarea>
+                    <div *ngIf="isOpenText(question)">
+                        <label>{{'question.good.keywords' | translate}}</label><textarea class="form-control" [(ngModel)]="question.goodKeywords"></textarea>
+                        <label>{{'question.bad.keywords' | translate}}</label><textarea class="form-control" [(ngModel)]="question.badKeywords"></textarea>
+                    </div>
                     <div class="controlBtns">
-                        <button class="btn btn-danger" (click)="setEditMode(false)">{{'cancel' | translate}}<i class="fa fa-fw fa-times"></i></button>
+                        <button class="btn btn-danger" (click)="cancelEdit()">{{'cancel' | translate}}<i class="fa fa-fw fa-times"></i></button>
                         <button class="btn btn-success" (click)="editQuestion(question, title, req)">{{'save' | translate}}<i class="fa fa-fw fa-check"></i></button>
                     </div>
                 </div>
@@ -62,15 +71,27 @@
 
 <div *ngIf="newQuestionDisplayed" class="col-md-12 newQuestionSection">
     <h3 class="bigFont">{{'new_question' | translate}}</h3>
+
     <label for="qTitle">{{'title' | translate}}</label>
     <input class="form-control" id="qTitle" [(ngModel)]="newQuestion.title">
+
     <label for="qRequirement">{{'requirement' | translate}}</label>
     <textarea class="form-control" id="qRequirement" [(ngModel)]="newQuestion.requirement"></textarea>
+
     <label for="qType">{{'question.type' | translate}}</label>
     <select id="qType" class="form-control" [ngModel]="newQuestionType" (change)="newQuestionTypeSelected($event.target.value)">
         <option disabled selected></option>
         <option *ngFor="#type of questionTypes" [value]="type">{{type | translate}}</option>
     </select>
+
+    <div *ngIf="isOpenText(question)">
+        <label for="qGoodkeywords">{{'question.good.keywords' | translate}}</label>
+        <textarea class="form-control" id="qGoodkeywords" [(ngModel)]="newQuestion.goodKeywords"></textarea>
+
+        <label for="qBadkeywords">{{'question.bad.keywords' | translate}}</label>
+        <textarea class="form-control" id="qBadkeywords" [(ngModel)]="newQuestion.badKeywords"></textarea>
+    </div>
+
     <div class="controlBtns">
         <button class="btn btn-danger" (click)="displayNewQuestion(false)">{{'cancel' | translate}}<i class="fa fa-fw fa-times"></i></button>
         <button class="btn btn-success" (click)="addQuestion()">{{'save' | translate}}<i class="fa fa-fw fa-check"></i></button>

@@ -29,6 +29,8 @@ export default class QuestionComponent {
     public isNewQuestion: boolean;
 
     private selectedQuestion: Question;
+    private oldGoodKeywords:string;
+    private oldBadKeywords:string;
     private editMode: boolean;
 
     private assignMode: boolean;
@@ -85,6 +87,10 @@ export default class QuestionComponent {
         this.newQuestionType = type;
     }
 
+    public isOpenText(question:Question): boolean {
+        return question.questionType == QuestionType.OPEN_TEXT;
+    }
+
     public removeQuestion(question:Question) {
         this.questionsService.removeQuestion(question).subscribe(
             () => {
@@ -122,6 +128,15 @@ export default class QuestionComponent {
 
     public setEditMode(val: boolean){
         this.editMode = val;
+
+        this.oldGoodKeywords = val? this.selectedQuestion.goodKeywords : null;
+        this.oldBadKeywords = val? this.selectedQuestion.badKeywords : null;
+    }
+
+    public cancelEdit(){
+        this.selectedQuestion.goodKeywords = this.oldGoodKeywords;
+        this.selectedQuestion.badKeywords = this.oldBadKeywords;
+        this.setEditMode(false);
     }
 
     public setAssignMode(val: boolean) {
