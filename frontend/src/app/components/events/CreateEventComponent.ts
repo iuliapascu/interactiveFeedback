@@ -24,10 +24,8 @@ export default class CreateEventComponent {
 
     private allTopics: Array<Topic>;
     private selectedQuestions: Array<Question>;
-    //TODO: use a datetimepicker
-    private SELECTED_DATETIME: string = "17/05/16";
-    //TODO: use a given name
-    private NAME: string = "Demo Event";
+    private eventDate: string = "17/05/16";
+    private eventName: string;
     private createdEvent: CourseEvent;
 
     constructor(private courseEventsService:CourseEventsService, private topicsService:TopicsService) {
@@ -79,8 +77,8 @@ export default class CreateEventComponent {
 
     public createEvent() {
         if (this.selectedQuestions != null && this.selectedQuestions.length > 0) {
-            this.createdEvent.date = this.SELECTED_DATETIME;
-            this.createdEvent.name = this.NAME;
+            this.createdEvent.date = this.eventDate;
+            this.createdEvent.name = this.eventName;
             this.createdEvent.courseId = this.selectedCourse.id;
 
             this.courseEventsService.saveCourseEvent(this.createdEvent, this.selectedQuestions).subscribe(

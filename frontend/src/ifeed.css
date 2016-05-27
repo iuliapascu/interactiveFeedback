@@ -88,6 +88,10 @@ table tr:hover {
     float: left;
 }
 
+.center {
+    text-align: center;
+}
+
 /* answers styling */
 .answerTable {
     margin-top: 15px;
@@ -163,4 +167,8 @@ table tr:hover {
     width: 12px;
     height: 12px;
     margin-right: 5px;
+}
+
+.newEvent {
+    margin-bottom: 10px;
 }

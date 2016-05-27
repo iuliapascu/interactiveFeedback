@@ -1,9 +1,17 @@
 <div class="eventComponent">
-    <h3 class="bigFont">{{'create.event' | translate}}</h3>
 
+    <div class="col-md-6 col-md-offset-3 newEvent">
+        <h3 class="center">{{'create.event' | translate}}</h3>
+
+        <label for="name">{{'name' | translate}}</label>
+        <input class="form-control" id="name" [(ngModel)]="eventName">
+
+        <label for="date">{{'date' | translate}}</label>
+        <input class="form-control" id="date" [(ngModel)]="eventDate">
+    </div>
 
     <div class="col-md-6">
-        <h4 class="bigFont">{{'topics' | translate}}</h4>
+        <h4>{{'topics' | translate}}</h4>
         <table class="table table-scrollable">
             <tbody>
             <tr *ngFor="#topic of getTopics()">
