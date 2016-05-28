@@ -49,4 +49,12 @@ export default class Topic {
         }
         return false;
     }
+
+    public titleMatchesFilterString(filter:string) {
+        if (filter != null) {
+            return this.title.toLowerCase().indexOf(filter.toLowerCase()) > -1;
+        } else {
+            return false;
+        }
+    }
 }

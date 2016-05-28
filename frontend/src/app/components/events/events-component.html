@@ -7,17 +7,22 @@
     <course-list (onCourseSelectedEvent)="handleOnSelectedCourseEvent($event)"></course-list>
 </div>
 
-<div *ngIf="courseSelected" class="col-md-12">
+<div *ngIf="courseSelected">
 
-    <div *ngIf="!eventSelected" class="col-md-6 col-md-offset-3">
-        <table class="table table-hover table-scrollable">
-            <thead><tr><th>{{'select.event' | translate}}</th></tr></thead>
-            <tbody>
-                <tr *ngFor="#courseEvent of getCourseEvents()" (click)="selectCourseEvent(courseEvent)">
-                    <td>{{courseEvent.name}}</td>
-                </tr>
-            </tbody>
-        </table>
+    <div *ngIf="!eventSelected">
+        <div class="col-md-3">
+            <input class="filter" [(ngModel)]="searchTerm" placeholder="{{'filter' | translate}}">
+        </div>
+        <div class="col-md-6">
+            <table class="table table-hover table-scrollable">
+                <thead><tr><th>{{'select.event' | translate}}</th></tr></thead>
+                <tbody>
+                    <tr *ngFor="#courseEvent of getCourseEvents()" (click)="selectCourseEvent(courseEvent)">
+                        <td>{{courseEvent.name}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div *ngIf="eventSelected">

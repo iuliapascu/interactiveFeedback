@@ -52,5 +52,6 @@
   "SINGLE_ANSWER": "Single answer",
   "MULTIPLE_ANSWER": "Multiple answer",
   "OPEN_TEXT": "Open-end text",
-  "JAVA_CODE": "Java code"
+  "JAVA_CODE": "Java code",
+  "filter": "Filter ..."
 }

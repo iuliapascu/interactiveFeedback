@@ -17,6 +17,7 @@ export default class CourseListComponent {
 
     private searchResult:Observable<CoursesResponse>;
     private allCourses: Array<Course>;
+    private searchTerm: string = '';
 
     constructor(private coursesService:CoursesService) {
     }
@@ -25,7 +26,11 @@ export default class CourseListComponent {
         if (this.allCourses == null) {
             this.queryCourses();
         }
-        return this.allCourses;
+        return this.filterResults(this.allCourses, this.searchTerm);
+    }
+
+    public filterResults(itemList: Array<any>, term: string) {
+        return (itemList != null)? itemList.filter((item) => item.matchesFilterString(term)) : itemList;
     }
 
     public selectCourse(course: Course) {

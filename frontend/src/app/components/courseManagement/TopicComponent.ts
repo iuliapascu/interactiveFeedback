@@ -29,6 +29,9 @@ export default class TopicComponent {
     private allQuestions: Array<Question>;
     private unassignedQuestions: Array<Question>;
 
+    private searchTerm: string = '';
+    private questionSearchTerm: string = '';
+
     constructor(private topicsService:TopicsService, private questionsService: QuestionsService) {
         this.newTopic = new Topic();
     }
@@ -41,7 +44,11 @@ export default class TopicComponent {
                 );
             }, 100);
         }
-        return this.allTopics;
+        return this.filterResults(this.allTopics, this.searchTerm);
+    }
+
+    public filterResults(itemList: Array<any>, term: string) {
+        return (itemList != null)? itemList.filter((item) => item.titleMatchesFilterString(term)) : itemList;
     }
 
     public saveTopic(topic:Topic) {
@@ -102,7 +109,7 @@ export default class TopicComponent {
                 });
             }
         }
-        return this.unassignedQuestions;
+        return this.filterResults(this.unassignedQuestions, this.questionSearchTerm);
     }
 
     public unassignQuestion(question: Question, topic: Topic) {

@@ -26,4 +26,12 @@ export default class Course {
 
         return results;
     }
+
+    public matchesFilterString(filter:string) {
+        if (filter != null) {
+            return this.name.toLowerCase().indexOf(filter.toLowerCase()) > -1;
+        } else {
+            return false;
+        }
+    }
 }

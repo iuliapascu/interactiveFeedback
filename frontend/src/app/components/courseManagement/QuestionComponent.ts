@@ -36,6 +36,8 @@ export default class QuestionComponent {
     private assignMode: boolean;
     private allTopics: Array<Topic>;
 
+    private searchTerm: string = '';
+
     constructor(private questionsService:QuestionsService, private topicsService:TopicsService) {
         this.newQuestion = new Question();
         this.newQuestionDisplayed = false;
@@ -54,7 +56,11 @@ export default class QuestionComponent {
                 );
             }, 100);
         }
-        return this.allQuestions;
+        return this.filterResults(this.allQuestions, this.searchTerm);
+    }
+
+    public filterResults(itemList: Array<any>, term: string) {
+        return (itemList != null)? itemList.filter((item) => item.contentMatchesFilterString(term)) : itemList;
     }
 
     public saveQuestion(question:Question) {

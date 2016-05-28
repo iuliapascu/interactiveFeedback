@@ -172,3 +172,15 @@ table tr:hover {
 .newEvent {
     margin-bottom: 10px;
 }
+
+.filter {
+    border: .0625rem solid #ccc;
+    border-radius: .25rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.smallFilter {
+    font-size: 1rem;
+}

@@ -41,4 +41,21 @@ export default class Question {
 
         return results;
     }
+
+    public titleMatchesFilterString(filter:string) {
+        if (filter != null) {
+            return this.title.toLowerCase().indexOf(filter.toLowerCase()) > -1;
+        } else {
+            return false;
+        }
+    }
+
+    public contentMatchesFilterString(filter:string) {
+        let content: string = this.title + " " + this.requirement;
+        if (filter != null) {
+            return content.toLowerCase().indexOf(filter.toLowerCase()) > -1;
+        } else {
+            return false;
+        }
+    }
 }

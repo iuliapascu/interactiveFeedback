@@ -1,6 +1,9 @@
 <div *ngIf="!newQuestionDisplayed">
     <button class="btn btn-primary newBtn" (click)="displayNewQuestion(true)">{{'add_question' | translate}}<i class="fa fa-fw fa-plus"></i></button>
-    <h3 class="bigFont">{{'questions' | translate}}</h3>
+    <h3>{{'questions' | translate}}</h3>
+    <div class="col-md-6">
+        <input class="filter" [(ngModel)]="searchTerm" placeholder="{{'filter' | translate}}">
+    </div>
     <table class="table table-scrollable">
         <tbody>
         <tr *ngFor="#question of getQuestions()">

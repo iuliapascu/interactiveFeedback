@@ -22,6 +22,7 @@ export default class EventsComponent {
     private eventSelected: boolean;
 
     private allCourseEvents: Array<CourseEvent>;
+    private searchTerm: string = '';
 
     constructor(private courseEventsService: CourseEventsService) {
         this.courseSelected = false;
@@ -32,7 +33,11 @@ export default class EventsComponent {
         if (this.allCourseEvents == null) {
             this.queryCourseEvents();
         }
-        return this.allCourseEvents;
+        return this.filterResults(this.allCourseEvents, this.searchTerm);
+    }
+
+    public filterResults(itemList: Array<any>, term: string) {
+        return (itemList != null)? itemList.filter((item) => item.matchesFilterString(term)) : itemList;
     }
 
     public selectCourseEvent(courseEvent: CourseEvent) {
