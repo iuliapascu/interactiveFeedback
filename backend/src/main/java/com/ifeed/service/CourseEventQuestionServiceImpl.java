@@ -86,6 +86,13 @@ public class CourseEventQuestionServiceImpl implements CourseEventQuestionServic
         courseEventQuestionRepository.save(courseEventQuestions);
     }
 
+
+    @Override
+    public void duplicateEventQuestions(Long oldEventId, Long courseEventId) {
+        List<Long> questionIds = courseEventQuestionRepository.findCourseEventQuestionIdsByCourseEventId(oldEventId);
+        addEntitiesWithIds(courseEventId, questionIds);
+    }
+
     @Override
     public void remove(Long courseEventQuestionId) {
         if (courseEventQuestionId != null) {

@@ -19,6 +19,8 @@ public interface CourseEventQuestionService {
 
     void addEntitiesWithIds(Long questionEventId, List<Long> questionIds);
 
+    void duplicateEventQuestions(Long oldEventId, Long courseEventId);
+
     void remove(Long courseEventQuestionId);
 
     void removeAllForCourseEvent(Long courseEventId);

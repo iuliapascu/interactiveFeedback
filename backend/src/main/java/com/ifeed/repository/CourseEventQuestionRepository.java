@@ -20,6 +20,9 @@ public interface CourseEventQuestionRepository extends JpaRepository<CourseEvent
     @Query("SELECT ceq FROM CourseEventQuestion as ceq WHERE ceq.courseEvent.id = :courseEventId")
     List<CourseEventQuestion> findCourseEventQuestionsByCourseEventId(@Param("courseEventId") long courseEventId);
 
+    @Query("SELECT ceq.question.id FROM CourseEventQuestion as ceq WHERE ceq.courseEvent.id = :courseEventId")
+    List<Long> findCourseEventQuestionIdsByCourseEventId(@Param("courseEventId") long courseEventId);
+
     @Query("SELECT COUNT(ceq) FROM CourseEventQuestion as ceq WHERE ceq.question.id = :questionId")
     Integer findCountQuestionAssignments(@Param("questionId") long questionId);
 

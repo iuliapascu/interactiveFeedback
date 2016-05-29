@@ -5,6 +5,7 @@ import EventsComponent from "./events/EventsComponent";
 import CourseManagementComponent from "./courseManagement/CourseManagementComponent";
 import CourseAdminComponent from "./administration/CourseAdminComponent";
 import UserAdminComponent from "./administration/UserAdminComponent";
+import CourseEvent from "../data/CourseEvent";
 
 @Component({
     selector: 'ifeed',
@@ -15,6 +16,7 @@ import UserAdminComponent from "./administration/UserAdminComponent";
 export default class IFeedComponent {
 
     private selectedPage:number;
+    private createdEvent:CourseEvent;
 
     constructor(public translate:TranslateService, private logoutService:LogoutService) {
         translate.use('en');
@@ -29,7 +31,8 @@ export default class IFeedComponent {
         this.logoutService.logout();
     }
 
-    handleOnEventCreatedEvent(event: any) {
+    handleOnEventCreatedEvent(event: CourseEvent) {
         this.selectPage(0);
+        this.createdEvent = event;
     }
 }

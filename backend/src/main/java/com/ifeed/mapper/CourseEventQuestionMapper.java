@@ -33,6 +33,7 @@ public class CourseEventQuestionMapper extends CollectionMapper<CourseEventQuest
         dto.setCourseEventId(entity.getCourseEvent().getId());
         dto.setQuestion(questionMapper.map(entity.getQuestion()));
         dto.setVersion(entity.getVersion());
+        dto.setId(entity.getId());
         dto.setQuestionState(entity.getQuestionState());
         return dto;
     }
@@ -49,6 +50,11 @@ public class CourseEventQuestionMapper extends CollectionMapper<CourseEventQuest
 
         if (dto.getQuestion() != null) {
             questionMapper.map(dto.getQuestion(), entity.getQuestion());
+        }
+
+        if (dto.getId() != null && dto.getVersion() != null) {
+            entity.setId(dto.getId());
+            entity.setVersion(dto.getVersion());
         }
 
         entity.setQuestionState(dto.getQuestionState());

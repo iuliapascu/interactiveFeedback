@@ -4,7 +4,7 @@
 
 <div *ngIf="!courseSelected" class="col-md-12">
     <h4 class="bigFont">{{'select_course' | translate}}</h4>
-    <course-list (onCourseSelectedEvent)="handleOnSelectedCourseEvent($event)"></course-list>
+    <course-list (onCourseSelectedEvent)="handleOnSelectedCourse($event)"></course-list>
 </div>
 
 <div *ngIf="courseSelected">
@@ -15,10 +15,19 @@
         </div>
         <div class="col-md-6">
             <table class="table table-hover table-scrollable">
-                <thead><tr><th>{{'select.event' | translate}}</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th>{{'select.event' | translate}}</th>
+                        <th>{{'actions' | translate}}</th>
+                    </tr>
+                </thead>
                 <tbody>
-                    <tr *ngFor="#courseEvent of getCourseEvents()" (click)="selectCourseEvent(courseEvent)">
-                        <td>{{courseEvent.name}}</td>
+                    <tr *ngFor="#courseEvent of getCourseEvents()">
+                        <td (click)="selectCourseEvent(courseEvent)">{{courseEvent.name}}</td>
+                        <td>
+                            <button class="btn btn-primary smallBtn editBtn" (click)="removeEvent(courseEvent)"><span class="fa faw fa-trash-o"></span></button>
+                            <button class="btn btn-primary smallBtn editBtn" (click)="duplicateEvent(courseEvent)"><span class="fa faw fa-files-o"></span></button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -31,6 +40,6 @@
 </div>
 
 <div class="col-md-12">
-    <button class="btn btn-danger-outline newBtn" *ngIf="courseSelected && !eventSelected" (click)="handleOnSelectedCourseEvent(null)">{{'change.course' | translate}}</button>
+    <button class="btn btn-danger-outline newBtn" *ngIf="courseSelected && !eventSelected" (click)="handleOnSelectedCourse(null)">{{'change.course' | translate}}</button>
     <button class="btn btn-danger-outline newBtn" *ngIf="eventSelected" (click)="selectCourseEvent(null)">{{'change.event' | translate}}</button>
 </div>

@@ -1,6 +1,7 @@
 package com.ifeed.controller;
 
 import com.ifeed.model.dto.CourseEventDTO;
+import com.ifeed.model.dto.CourseEventQuestionDTO;
 import com.ifeed.service.CourseEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +35,13 @@ public class CourseEventController {
         return courseEvents;
     }
 
+    @RequestMapping(value="/eventQuestions", method = RequestMethod.GET)
+    @ResponseBody
+    public List<CourseEventQuestionDTO> getAllCourseEventQuestions(@RequestParam(value = "courseEventId", required = true) final Long courseEventId) {
+        List<CourseEventQuestionDTO> courseEventQuestions = courseEventService.getAllCourseEventQuestions(courseEventId);
+        return courseEventQuestions;
+    }
+
     @RequestMapping(value = "/save", method = RequestMethod.GET)
     @ResponseBody
     public CourseEventDTO saveCourseEvent(@RequestParam(value = "id", required = false) final Long id,
@@ -52,6 +60,15 @@ public class CourseEventController {
 
         List<String> questionIds = Arrays.asList(questionListIds.split("\\s*,\\s*"));
         return courseEventService.save(new CourseEventDTO(id, version, name, creationDate, courseId), questionIds);
+    }
+
+    @RequestMapping(value = "/duplicate", method = RequestMethod.GET)
+    @ResponseBody
+    public CourseEventDTO duplicateCourseEvent(@RequestParam(value = "oldEventId", required = false) final Long oldEventId,
+                                               @RequestParam(value = "name", required = false) final String name,
+                                               @RequestParam(value = "courseId", required = false) final Long courseId) {
+
+        return courseEventService.duplicate(oldEventId, name, courseId);
     }
 
     @RequestMapping(value = "/remove", method = RequestMethod.GET)

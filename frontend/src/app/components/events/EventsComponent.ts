@@ -1,12 +1,13 @@
-import {Component} from "angular2/core";
+import {Component, Input} from "angular2/core";
 import {TranslatePipe} from "ng2-translate";
 import CourseEventsService from "../../services/CourseEventsService";
 import Course from "../../data/Course";
 import CourseEvent from "../../data/CourseEvent";
 import ParticipateInEventComponent from "./ParticipateInEventComponent";
 import CourseListComponent from "../courseManagement/CourseListComponent";
-import {Observable} from "rxjs/Observable";
 import CourseEventsResponse from "../../data/CourseEventsResponse";
+import CourseEventQuestion from "../../data/CourseEventQuestion";
+import CourseEventQuestionResponse from "../../data/CourseEventQuestionResponse";
 
 @Component({
     selector: 'events',
@@ -15,6 +16,7 @@ import CourseEventsResponse from "../../data/CourseEventsResponse";
     pipes: [TranslatePipe]
 })
 export default class EventsComponent {
+    @Input() private createdEvent:CourseEvent;
     private selectedCourse:Course;
     private courseSelected: boolean;
 
@@ -41,11 +43,20 @@ export default class EventsComponent {
     }
 
     public selectCourseEvent(courseEvent: CourseEvent) {
-        this.selectedCourseEvent = courseEvent;
-        this.eventSelected = (courseEvent != null);
+        if (courseEvent != null) {
+            this.courseEventsService.getCourseEventQuestions(courseEvent.id).subscribe(
+                (searchResponse:CourseEventQuestionResponse) => {
+                    courseEvent.questions = searchResponse.results;
+                    this.selectedCourseEvent = courseEvent;
+                    this.eventSelected = true;
+                }
+            );
+        } else {
+            this.eventSelected = false;
+        }
     }
 
-    public handleOnSelectedCourseEvent(course: Course) {
+    public handleOnSelectedCourse(course: Course) {
         this.selectedCourse = course;
         if (course != null) {
             this.queryCourseEvents();
@@ -53,13 +64,18 @@ export default class EventsComponent {
         this.courseSelected = (course != null);
     }
 
+    public duplicateEvent(event: CourseEvent) {
+        this.courseEventsService.duplicateCourseEvent(event).subscribe(() => this.queryCourseEvents());
+    }
+
+    public removeEvent(event: CourseEvent) {
+        this.courseEventsService.removeCourseEvent(event).subscribe(() => this.queryCourseEvents());
+    }
+
     private queryCourseEvents(){
         setTimeout(() => {
-            let searchResult: Observable<CourseEventsResponse> = this.courseEventsService.getCourseEvents(this.selectedCourse.id);
-            searchResult.subscribe(
-                searchResult => {
-                    this.allCourseEvents = searchResult.results;
-                }
+            this.courseEventsService.getCourseEvents(this.selectedCourse.id).subscribe(
+                (searchResult: CourseEventsResponse) => this.allCourseEvents = searchResult.results
             );
         }, 100);
     }

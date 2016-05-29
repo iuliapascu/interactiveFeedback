@@ -33,14 +33,12 @@ public class CourseEventServiceImpl implements CourseEventService{
 
     @Override
     public List<CourseEventDTO> getAllCourseEventsByCourseId(Long courseId) {
-        List<CourseEventDTO> courseEvents = mapper.map(courseEventRepository.findCourseEventsByCourseId(courseId));
-        //TODO: only fetch questions when an event is selected
-        for (CourseEventDTO dto : courseEvents) {
-            List<CourseEventQuestionDTO> courseEventQuestions = courseEventQuestionService.getAllCourseEventQuestionsByCourseEventId(dto.getId());
-            dto.setQuestions(courseEventQuestions);
-        }
+        return mapper.map(courseEventRepository.findCourseEventsByCourseId(courseId));
+    }
 
-        return courseEvents;
+    @Override
+    public List<CourseEventQuestionDTO> getAllCourseEventQuestions(Long courseEventId) {
+       return courseEventQuestionService.getAllCourseEventQuestionsByCourseEventId(courseEventId);
     }
 
     @Override
@@ -72,6 +70,21 @@ public class CourseEventServiceImpl implements CourseEventService{
         courseEventQuestionService.addEntitiesWithIds(savedCourseEvent.getId(), questionIds);
 
         return mapper.map(savedCourseEvent);
+    }
+
+    @Override
+    public CourseEventDTO duplicate(Long oldEventId, String name, Long courseId) {
+        CourseEventDTO dto = new CourseEventDTO();
+        dto.setName(name);
+        dto.setCourseId(courseId);
+
+        CourseEvent courseEvent = new CourseEvent();
+        mapper.map(dto, courseEvent);
+
+        courseEvent = courseEventRepository.save(courseEvent);
+        courseEventQuestionService.duplicateEventQuestions(oldEventId, courseEvent.getId());
+
+        return mapper.map(courseEvent);
     }
 
     @Override
