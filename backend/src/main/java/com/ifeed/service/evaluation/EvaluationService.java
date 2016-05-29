@@ -1,6 +1,5 @@
 package com.ifeed.service.evaluation;
 
-import com.ifeed.model.Question;
 import com.ifeed.model.dto.UserAnswerDTO;
 
 /**

@@ -13,6 +13,8 @@ public interface AnswerService {
 
     List<AnswerDTO> getAllQuestionAnswers(Long questionId);
 
+    List<AnswerDTO> getAllCorrectQuestionAnswers(Long questionId);
+
     AnswerDTO save(AnswerDTO answer);
 
     void remove(Long answerId);

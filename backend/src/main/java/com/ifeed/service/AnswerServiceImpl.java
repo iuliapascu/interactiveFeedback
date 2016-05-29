@@ -32,6 +32,11 @@ public class AnswerServiceImpl implements AnswerService{
     }
 
     @Override
+    public List<AnswerDTO> getAllCorrectQuestionAnswers(Long questionId) {
+        return mapper.map(answerRepository.findQuestionCorrectAnswers(questionId));
+    }
+
+    @Override
     public AnswerDTO find(long id) {
         Answer answer = answerRepository.findOne(id);
         if (answer == null) {
