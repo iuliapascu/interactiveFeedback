@@ -34,6 +34,15 @@ public class UserAnswerController {
         return answers;
     }
 
+    @RequestMapping(value = "/save", method = RequestMethod.GET)
+    @ResponseBody
+    public UserAnswerDTO saveAnswer(@RequestParam(value = "text", required = true) final String text,
+                                    @RequestParam(value = "eventId", required = true) final Long eventId,
+                                    @RequestParam(value = "questionId", required = true) final Long questionId) {
+
+        return userAnswerService.save(new UserAnswerDTO(text, eventId, questionId));
+    }
+
     @RequestMapping(value = "/remove", method = RequestMethod.GET)
     @ResponseBody
     public UserAnswerDTO removeUserAnswer(@RequestParam(value = "id", required = true) final Long id) {

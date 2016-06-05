@@ -22,6 +22,16 @@ export default class QuestionsService {
         return jsonData.map((data) => QuestionsResponse.fromJson(data));
     }
 
+    public getQuestion(id: number):Observable<Object> {
+        let jsonData:Observable<Object>;
+        this.api.resetDefaultSearchParams();
+
+        this.api.setDefaultSearchParam('id=' + id);
+
+        jsonData = this.api.getJson('/find');
+        return jsonData.map((data) => Question.fromJson(data));
+    }
+
     public saveQuestion(question:Question):Observable<Object> {
         let jsonData:Observable<Object>;
         this.api.resetDefaultSearchParams();

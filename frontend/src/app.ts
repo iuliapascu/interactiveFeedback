@@ -11,6 +11,7 @@ import QuestionsService from "./app/services/QuestionsService";
 import TopicsService from "./app/services/TopicsService";
 import AnswersService from "./app/services/AnswersService";
 import CourseEventsService from "./app/services/CourseEventsService";
+import UserAnswersService from "./app/services/UserAnswersService";
 
 bootstrap(IFeedApplication, [HTTP_PROVIDERS, TranslateService, TranslatePipe, LogoutService, CoursesService,
-                             QuestionsService, TopicsService, AnswersService, CourseEventsService]);
+                             QuestionsService, TopicsService, AnswersService, CourseEventsService, UserAnswersService]);

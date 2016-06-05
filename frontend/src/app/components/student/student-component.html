@@ -1,0 +1,30 @@
+<div class="col-md-6 col-md-offset-3">
+    <div>
+        <div><span><b><u>{{getQuestionTitle()}}</u></b></span></div>
+        <div><span><i>{{getQuestionRequirement()}}</i></span></div><br>
+    </div>
+    <div *ngIf="!answerSubmitted">
+        <div *ngIf="getQuestionType() == 0">
+            <div *ngFor="#answer of getQuestionAnswers()" class="radio">
+                <label><input type="radio" name="singleAnswer" (change)="selectSingleAnswer(answer)">{{' ' + answer.text}}</label>
+            </div>
+            <div class="hint left"><span>{{'single.answer' | translate}}</span></div>
+        </div>
+        <div *ngIf="getQuestionType() == 1">
+            <div *ngFor="#answer of getQuestionAnswers()">
+                <label><input #correctcb type="checkbox" (change)="selectMultipleAnswer(answer, correctcb.checked)" />{{' ' + answer.text}}</label>
+            </div>
+            <div class="hint left"><span>{{'multiple.answers' | translate}}</span></div>
+        </div>
+        <div *ngIf="getQuestionType() > 1">
+            <textarea class="form-control" [(ngModel)]="textAnswer"></textarea>
+        </div>
+        <div>
+            <button class="btn btn-primary newBtn" (click)="submitAnswer()">{{'submit' | translate}}</button>
+        </div>
+    </div>
+    <div *ngIf="answerSubmitted">
+        <span *ngIf="getQuestionType() <= 1">ANSWER SUBMITTED: correctness {{submittedAnswer.percentage}}%</span>
+        <span *ngIf="getQuestionType() > 1">ANSWER SUBMITTED: answer score {{submittedAnswer.percentage}}</span>
+    </div>
+</div>

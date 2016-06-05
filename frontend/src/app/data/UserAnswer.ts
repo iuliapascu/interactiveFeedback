@@ -11,26 +11,21 @@ export default class UserAnswer {
     }
 
     static fromJson(json:any):UserAnswer {
+        var text:string = json['text'];
+        var title:string = text.substring(0, Math.min(20, text.length));
         return new UserAnswer(
             json['id'],
             json['version'],
-            json['text'],
+            text,
+            json['isCorrect'],
             json['percentage'],
+            title,
             json['questionId'],
             json['eventId']);
     }
 
     public getProperties(): any {
         let results: Array<string> = [];
-
-        if (this.id != null && this.version != null) {
-            results.push('id=' + this.id);
-            results.push('version=' + this.version);
-        }
-
-        if (this.percentage != null) {
-            results.push('percentage=' + this.percentage);
-        }
 
         results.push('text=' + this.text);
         results.push('questionId=' + this.questionId);

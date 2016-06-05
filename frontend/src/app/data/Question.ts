@@ -28,8 +28,8 @@ export default class Question {
             results.push('id=' + this.id);
             results.push('version=' + this.version);
         }
-        results.push('title=' + this.title);
-        results.push('requirement=' + this.requirement);
+        results.push('title=' + encodeURIComponent(this.title));
+        results.push('requirement=' + encodeURIComponent(this.requirement));
         results.push('questionType=' + this.questionType);
 
             if (this.goodKeywords != null) {

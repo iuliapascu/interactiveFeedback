@@ -6,6 +6,13 @@
                     <li><span class="boldFont" [ngClass]="{'selected':selectedPage==1}" (click)="selectPage(1)">{{'course_management' | translate}}</span></li>
                     <li><span class="boldFont" [ngClass]="{'selected':selectedPage==2}" (click)="selectPage(2)">{{'user_admin' | translate}}</span></li>
                     <li><span class="boldFont" [ngClass]="{'selected':selectedPage==3}" (click)="selectPage(3)">{{'course_admin' | translate}}</span></li>
+
+                    <!--REMOVE FOLLOWING LINEs -->
+                    <li><span class="boldFont" [ngClass]="{'selected':selectedPage==4}" (click)="selectPage(4)">STUDENT - single</span></li>
+                    <li><span class="boldFont" [ngClass]="{'selected':selectedPage==5}" (click)="selectPage(5)">STUDENT - multiple</span></li>
+                    <li><span class="boldFont" [ngClass]="{'selected':selectedPage==6}" (click)="selectPage(6)">STUDENT - open</span></li>
+                    <!--REMOVE PREVIOUS LINEs -->
+
                 </ul>
                 <ul class="nav pull-right">
                     <li>
@@ -35,6 +42,17 @@
         <div *ngIf="selectedPage == 3">
             <course-admin></course-admin>
         </div>
+        <!--REMOVE FOLLOWING LINEs -->
+        <div *ngIf="selectedPage == 4">
+            <student [currentQuestionId]="4" [currentEventId]="5"></student>
+        </div>
+        <div *ngIf="selectedPage == 5">
+            <student [currentQuestionId]="8" [currentEventId]="5"></student>
+        </div>
+        <div *ngIf="selectedPage == 6">
+            <student [currentQuestionId]="31" [currentEventId]="4"></student>
+        </div>
+        <!--REMOVE PREVIOUS LINEs -->
     </div>
 
 </div>

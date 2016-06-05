@@ -6,11 +6,12 @@ import CourseManagementComponent from "./courseManagement/CourseManagementCompon
 import CourseAdminComponent from "./administration/CourseAdminComponent";
 import UserAdminComponent from "./administration/UserAdminComponent";
 import CourseEvent from "../data/CourseEvent";
+import StudentComponent from "./student/StudentComponent";
 
 @Component({
     selector: 'ifeed',
     templateUrl: 'app/components/ifeed-component.html',
-    directives: [EventsComponent, CourseManagementComponent, CourseAdminComponent, UserAdminComponent],
+    directives: [EventsComponent, CourseManagementComponent, CourseAdminComponent, UserAdminComponent, StudentComponent],
     pipes: [TranslatePipe]
 })
 export default class IFeedComponent {

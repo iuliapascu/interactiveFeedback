@@ -32,7 +32,7 @@ export default class Answer {
             results.push('position=' + this.position);
         }
 
-        results.push('text=' + this.text);
+        results.push('text=' + encodeURIComponent(this.text));
         results.push('questionId=' + this.questionId);
 
         return results;

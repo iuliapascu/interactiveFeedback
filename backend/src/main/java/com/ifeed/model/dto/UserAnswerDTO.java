@@ -23,6 +23,12 @@ public class UserAnswerDTO extends AbstractDatabaseEntityDTO {
 
     }
 
+    public UserAnswerDTO(String text, Long courseEventId, Long questionId) {
+        this.setText(text);
+        this.setQuestionId(questionId);
+        this.setCourseEventId(courseEventId);
+    }
+
     public UserAnswerDTO(Long id, Integer version, String text, Long questionId, Long courseEventId) {
         this.setId(id);
         this.setVersion(version);

@@ -53,5 +53,10 @@
   "MULTIPLE_ANSWER": "Multiple answer",
   "OPEN_TEXT": "Open-end text",
   "JAVA_CODE": "Java code",
-  "filter": "Filter ..."
+  "filter": "Filter ...",
+  "submit": "Submit",
+  "single.answer": "! Only one answer is correct",
+  "multiple.answers": "! Zero, one, or more answers can be correct",
+  "enter.code": "Enter code",
+  "next": "Next"
 }

@@ -36,6 +36,12 @@ public class QuestionController {
         return questions;
     }
 
+    @RequestMapping(value="/find", method = RequestMethod.GET)
+    @ResponseBody
+    public QuestionDTO findQuestion(@RequestParam(value="id", required = true) final Long id) {
+        return questionService.find(id);
+    }
+
     @RequestMapping(value = "/save", method = RequestMethod.GET)
     @ResponseBody
     public QuestionDTO saveQuestion(@RequestParam(value = "id", required = false) final Long id,
